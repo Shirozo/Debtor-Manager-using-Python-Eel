@@ -3,6 +3,7 @@ from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
+from os import mkdir
 
 
 app = Flask(__name__)
@@ -16,9 +17,11 @@ Session(app)
 try:
     s = open('./database/database.db')
 except (FileExistsError, FileNotFoundError):
+    mkdir("database")
     s = open('./database/database.db', 'w')
 else:
     db = SQL("sqlite:///database/database.db")
+    db.execute("CREATE TABLE IF NOT EXISTS exd")
     
 
 
