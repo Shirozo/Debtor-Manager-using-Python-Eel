@@ -2,20 +2,22 @@
 <html lang="en">
     <head>
         <title>
-            Loan Management
+            Debtor Management
         </title>
+        <link rel="stylesheet" href="static/style.css">
     </head>
-    <body>
-        <header>
-            <h6>
-                Loan Management
-            </h6>
-        </header>
-        {% if session['user'] %}
-            <h6>
-                Log Out
-            </h6>
-            <input type="text" placeholder="Search" autocomplete="off" autofocus>
-        {% endif %} 
+    <body class="container">
+        <div class="upper">
+            <header>
+                <h6>
+                    Loan Management
+                </h6>
+                <h6>
+                    Log Out
+                </h6>
+                <input type="text" placeholder="Search" autocomplete="off" autofocus>
+            </header>
+        </div> 
+        {{% block main %}} {{% endblock %}}
     </body>
 </html>

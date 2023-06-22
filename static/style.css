@@ -1,0 +1,29 @@
+*, body{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.container{
+    margin: 2% 2%;
+}
+
+.upper{
+    padding: 1%;
+    background-color: rgb(225, 225, 254);
+    border-radius: .5em;
+    outline: rgb(255, 225, 254);
+}
+
+.upper h6{
+    font-size: 250%;
+}
+
+.login{
+    font-size: 150%;
+    border: black solid 1px;
+    width: 20%;
+    text-align: center;
+    margin: 5% auto;
+    padding: 2% 1%;
+}

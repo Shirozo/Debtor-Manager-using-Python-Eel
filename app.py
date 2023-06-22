@@ -19,9 +19,12 @@ try:
 except (FileExistsError, FileNotFoundError):
     mkdir("database")
     s = open('./database/database.db', 'w')
-else:
     db = SQL("sqlite:///database/database.db")
-    db.execute("CREATE TABLE IF NOT EXISTS exd")
+    db.execute("CREATE TABLE IF NOT EXISTS exdafgf ( password )")
+    db.execute("CREATE TABLE IF NOT EXISTS debtor (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL)")
+    db.execute("INSERT INTO exdafgf (password) VALUES (?)", generate_password_hash("admin"))
+
+db = SQL("sqlite:///database/database.db")
     
 
 
@@ -36,4 +39,15 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    return render_template("layout.html") 
+    try:
+        session["user"]
+        return render_template("index.html")
+    except KeyError:
+        return redirect("/login")
+
+@app.route("/login", methods = ["POST", "GET"])
+def login():
+    if request.method == "POST":
+        ...
+    else:
+        return render_template("login.html")
