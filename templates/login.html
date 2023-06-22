@@ -5,14 +5,44 @@
             Debtor  Management
         </title>
         <link rel="stylesheet" href="static/style.css">
+        <link rel="icon" href="static/debt.png">
     </head>
     <body class="container">
         <div class="login">
             <h6> Log In</h6>
+            {% if get_flashed_messages() %}
+                <i class="invalid">{{ get_flashed_messages() | join(" ") }}</i>
+            {% endif %}
             <form action="/login" method="post">
-                <input type="text" placeholder="Password">
+                <input name="password" id="password" type="password" placeholder="Password" autocomplete="off" autofocus required>
+                <i class="error" id="error">*required</i>
+                <div>
+                    <button type="submit" id="sub">Log In</button>
+                </div>    
             </form>
-            <button type="submit">Log In</button>
         </div>
     </body>
+    <script>
+        var password = document.getElementById("password");
+        var sub = document.getElementById("sub");
+        var error = document.getElementById("error");
+        sub.disabled = true;
+        password.addEventListener("keyup", async function(){
+            if (password.value.trim().length != 0){
+                sub.disabled = false;
+                password.style.border = "black solid 1px";
+                password.style.outline = "black solid 1px";
+                password.style.marginBottom = "10%"
+                error.style.display = "none";
+            }
+            else{
+                sub.disabled = true;
+                password.style.border = "red solid 1px";
+                password.style.outline = "red solid 1px";
+                password.style.marginBottom = "0%"
+                error.style.display = "block";
+                error.style.marginBottom = "6%";
+            }
+        })
+    </script>
 </html>

@@ -4,10 +4,12 @@
         <title>
             Debtor Management
         </title>
+        <link rel="icon" href="static/debt.png">
         <link rel="stylesheet" href="static/style.css">
     </head>
     <body class="container">
         <div class="upper">
+            <img src="static/debt.png" alt="">
             <header>
                 <h6>
                     Loan Management
@@ -18,6 +20,6 @@
                 <input type="text" placeholder="Search" autocomplete="off" autofocus>
             </header>
         </div> 
-        {{% block main %}} {{% endblock %}}
+        {% block main %} {% endblock %}
     </body>
 </html>

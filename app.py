@@ -20,13 +20,11 @@ except (FileExistsError, FileNotFoundError):
     mkdir("database")
     s = open('./database/database.db', 'w')
     db = SQL("sqlite:///database/database.db")
-    db.execute("CREATE TABLE IF NOT EXISTS exdafgf ( password )")
+    db.execute("CREATE TABLE IF NOT EXISTS exdafgf ( hyansasd )")
     db.execute("CREATE TABLE IF NOT EXISTS debtor (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL)")
-    db.execute("INSERT INTO exdafgf (password) VALUES (?)", generate_password_hash("admin"))
+    db.execute("INSERT INTO exdafgf (hyansasd) VALUES (?)", generate_password_hash("admin"))
 
 db = SQL("sqlite:///database/database.db")
-    
-
 
 @app.after_request
 def after_request(response):
@@ -48,6 +46,15 @@ def index():
 @app.route("/login", methods = ["POST", "GET"])
 def login():
     if request.method == "POST":
-        ...
+        pwd = request.form.get("password").strip()
+        hash_pass = db.execute("SELECT hyansasd FROM exdafgf")[0]
+        print(pwd)
+        if check_password_hash(hash_pass["hyansasd"], pwd):
+            user_hash = generate_password_hash("user")
+            session['user'] = user_hash
+            return redirect("/")
+        else:
+            flash("Incorrect Password")
+            return redirect("/login")
     else:
         return render_template("login.html")

@@ -8,22 +8,64 @@
     margin: 2% 2%;
 }
 
-.upper{
-    padding: 1%;
-    background-color: rgb(225, 225, 254);
+
+.error{
+    color: red;
+    display: none;
+    font-size: 40%;
+}
+
+.invalid{
+    color: red;
+    font-size: 40%;
+    text-align: left;
+}
+
+.login{
+    background-color: rgb(255, 250, 255);
+    border: rgb(253, 248, 253) solid 1px;
+    border-radius: .7em;
+    font-size: 150%;
+    margin: 5% auto;
+    padding: 2% .5%;
+    text-align: center;
+    width: 20%;
+
+}
+
+.login h6{
+    font-size: 150%;
+    margin-bottom: 10%;
+}
+
+.login input{
+    border: black solid 1px;
     border-radius: .5em;
+    padding: 3%;
+    margin-bottom: 10%;
+
+}
+
+.login button{
+    font-size: 80%;
+    margin-bottom: 30%;
+    background: inherit;
+    border: transparent;
+    cursor: pointer;
+}
+
+.login button:hover{
+    font-size: 100%;
+    color: blue;
+}
+
+.upper{
+    background-color: white;
+    border-radius: .5em;
+    padding: 1%;
     outline: rgb(255, 225, 254);
 }
 
 .upper h6{
     font-size: 250%;
-}
-
-.login{
-    font-size: 150%;
-    border: black solid 1px;
-    width: 20%;
-    text-align: center;
-    margin: 5% auto;
-    padding: 2% 1%;
 }
