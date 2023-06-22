@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Loan Management
+        </title>
+    </head>
+    <body>
+        <header>
+            <h6>
+                Loan Management
+            </h6>
+        </header>
+        {% if session['user'] %}
+            <h6>
+                Log Out
+            </h6>
+            <input type="text" placeholder="Search" autocomplete="off" autofocus>
+        {% endif %} 
+    </body>
+</html>
