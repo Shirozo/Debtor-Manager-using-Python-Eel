@@ -9,6 +9,8 @@ from os import mkdir
 
 app = Flask(__name__)
 
+ui = FlaskUI(app=app, server="flask")
+
 # Configure session to use filesystem (instead of signed cookies) C: CS50
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -67,4 +69,4 @@ def logout():
     return redirect("/")
 
 if __name__ == "__main__":
-    FlaskUI(app=app, server="flask", width=500, height=500).run()
+    ui.run()
