@@ -3,16 +3,31 @@ from flaskwebgui import FlaskUI
 from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required
+from functools import wraps
 from os import mkdir
 
 
 app = Flask(__name__)
 
+ui = FlaskUI(app=app, server="flask")
+
 # Configure session to use filesystem (instead of signed cookies) C: CS50
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+def login_required(f):
+    """
+    Decorate to require login.
+    
+    https://flask.palletsproject.com/en/1.1.x/patterns/viewdecorators
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('user') is None:
+            return redirect("/log_in")
+        return f(*args, **kwargs)
+    return decorated_function
 
 #Configure a database
 try:
@@ -67,4 +82,4 @@ def logout():
     return redirect("/")
 
 if __name__ == "__main__":
-    FlaskUI(app=app, server="flask", width=500, height=500).run()
+    ui.run()
