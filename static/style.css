@@ -1,0 +1,115 @@
+*, body{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.container{
+    background-color: white;
+}
+
+
+.error{
+    color: red;
+    display: none;
+    font-size: 40%;
+}
+
+.invalid{
+    color: red;
+    font-size: 40%;
+    text-align: left;
+}
+
+.login{
+    background-color: rgb(255, 250, 255);
+    border: rgb(253, 248, 253) solid 1px;
+    border-radius: .7em;
+    font-size: 150%;
+    margin: 5% auto;
+    padding: 2% .5%;
+    text-align: center;
+    width: 20%;
+
+}
+
+.login h6{
+    font-size: 150%;
+    margin-bottom: 10%;
+}
+
+.login input{
+    border: black solid 1px;
+    border-radius: .5em;
+    padding: 3%;
+    margin-bottom: 10%;
+
+}
+
+.login button{
+    font-size: 80%;
+    margin-bottom: 30%;
+    background: inherit;
+    border: transparent;
+    cursor: pointer;
+}
+
+.login button:hover{
+    font-size: 100%;
+    color: blue;
+}
+
+.navigation{
+
+    background-color: black;
+}
+
+.navigation ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation ul img{
+    width: 60px;
+    color: white;
+    filter: brightness(0) invert(1);
+}
+
+.navigation ul li{
+    width: 60dvw;
+    position: relative;
+    display: inline-block;
+    color: white;
+    font-size: 150%;
+    padding: 0.5% 0.5%;
+    margin-right: 15%;
+}
+
+.navigation ul li a{
+    color: white;
+    font-size: 100%;
+}
+
+.navigation ul li input{
+    padding: 1.8% 2%;
+    border: white solid 1px;
+    border-radius: .3em;
+}
+
+.navigation ul li input:focus{
+    border: blue solid 1px;
+    outline: blue solid 2px;
+}
+
+.upper{
+    background-color: white;
+    border-radius: .5em;
+    padding: 1%;
+    outline: rgb(255, 225, 254);
+}
+
+.upper h6{
+    font-size: 250%;
+}
