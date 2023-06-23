@@ -1,5 +1,22 @@
-{% extends "layout.html" %}
-
-{% block main %}
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Debtor Management
+        </title>
+        <link rel="icon" href="static/debt.png">
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+    <body class="container">
+        <nav class="navigation">
+            <ul class="nav-list">
+                <img src="static/debt.png" alt="debt logo">
+                <li>Debtor Management</li>
+                <li>
+                    Search <input type="text" name="name_search" id="name_search" placeholder="Name" autocomplete="off" autofocus>
+                </li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+        </nav>
+    </body>
+</html>
