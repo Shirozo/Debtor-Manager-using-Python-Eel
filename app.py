@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, flash, request, session, jsonify
+from flaskwebgui import FlaskUI
 from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -64,3 +65,6 @@ def login():
 def logout():
     session.clear()
     return redirect("/")
+
+if __name__ == "__main__":
+    FlaskUI(app=app, server="flask", width=500, height=500).run()
