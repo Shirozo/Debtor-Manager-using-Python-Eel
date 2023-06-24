@@ -9,7 +9,7 @@ from os import mkdir
 
 app = Flask(__name__)
 
-ui = FlaskUI(app=app, server="flask")
+ui = FlaskUI(app=app, server="flask",fullscreen=True)
 
 # Configure session to use filesystem (instead of signed cookies) C: CS50
 app.config["SESSION_PERMANENT"] = False
@@ -64,7 +64,6 @@ def login():
     if request.method == "POST":
         pwd = request.form.get("password").strip()
         hash_pass = db.execute("SELECT hyansasd FROM exdafgf")[0]
-        print(pwd)
         if check_password_hash(hash_pass["hyansasd"], pwd):
             user_hash = generate_password_hash("user")
             session['user'] = user_hash
@@ -83,3 +82,4 @@ def logout():
 
 if __name__ == "__main__":
     ui.run()
+    

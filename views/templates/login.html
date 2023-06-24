@@ -4,27 +4,27 @@
         <title>
             Debtor  Management
         </title>
-        <link rel="stylesheet" href="static/style.css">
-        <link rel="icon" href="static/debt.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <link rel="stylesheet" href="../static/style.css">
+        <link rel="icon" href="../static/debt.png">
+        <script src="../static/script.js" type="text/javascript"></script>
     </head>
     <body class="container">
         <div class="login">
             <h6> Log In</h6>
-            {% if get_flashed_messages() %}
-                <i class="invalid">{{ get_flashed_messages() | join(" ") }}</i>
-            {% endif %}
-            <form action="/login" method="post">
-                <input name="password" id="password" type="password" placeholder="Password" autocomplete="off" autofocus required>
-                <i class="error" id="error">*required</i>
-                <div>
-                    <button type="submit" id="sub">Log In</button>
-                </div>    
-            </form>
+            <i class="invalid" id="invalid">Invalid Password</i>
+            <input id="password" type="password" placeholder="Password" autocomplete="off" autofocus required>
+            <i class="error" id="error">*required</i>
+            <div>
+                <button type="submit" id="subbutton" onclick="logg()">Log In</button>
+            </div>    
         </div>
     </body>
+    <script type="text/javascript" src="/eel.js"></script>
     <script>
         var password = document.getElementById("password");
-        var sub = document.getElementById("sub");
+        var sub = document.getElementById("subbutton");
         var error = document.getElementById("error");
         sub.disabled = true;
         password.addEventListener("keyup", async function(){
