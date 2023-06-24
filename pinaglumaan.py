@@ -82,4 +82,5 @@ def logout():
 
 if __name__ == "__main__":
     ui.run()
-    
+    print()
+     
