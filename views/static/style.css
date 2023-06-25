@@ -9,6 +9,59 @@
     background-color: white;
 }
 
+#change_password{
+    display: none;
+}
+
+.change_pass{
+    position: fixed;
+    right: 23%;
+    top: -25%;
+    padding: 2% 2%;
+    background-color: rgb(205, 205, 205);
+    border-radius: .5em;
+    transition: all 2s;
+}
+
+.change_pass input{
+    padding: 2% 2%;
+    border: black solid 1px;
+    border-radius: .3em;
+    margin-bottom: 2%;
+}
+
+.change_pass input:focus{
+    border: blue 1px solid;
+    outline: blue 1px solid;
+}
+
+.change_pass button{
+    background: white;
+    border: black solid 1px;
+    border-radius: .2em;
+    padding: 2% 2%;
+    cursor: pointer;
+}
+
+.change_pass button:hover{
+    padding: 3% 3%;
+}
+
+.debt-data{
+    border-collapse: collapse;
+    width: 100dvw;
+    text-align: center;
+}
+
+.debt-data thead tr th{
+    font-size: 150%;
+    padding: 1% 1%;
+}
+
+.debt-data tbody tr:nth-child(odd){
+    background-color: #D6EEEE;
+    font-size: 120%;
+}
 
 .error{
     color: red;
@@ -62,7 +115,6 @@
 }
 
 .navigation{
-
     background-color: black;
 }
 
@@ -88,11 +140,6 @@
     margin-right: 15%;
 }
 
-.navigation ul li a{
-    color: white;
-    font-size: 100%;
-}
-
 .navigation ul li input{
     padding: 1.8% 2%;
     border: white solid 1px;
@@ -102,6 +149,21 @@
 .navigation ul li input:focus{
     border: blue solid 1px;
     outline: blue solid 2px;
+}
+
+#success{
+    display: none;
+    top: 10%;
+    right: 23%;
+    position: fixed;
+    background-color: rgb(205, 205, 205);
+    border-radius: .5em;
+    padding: 3.5% 5.4%;
+    transition: all 3s;
+}
+
+#success img{
+    width: 60px;
 }
 
 .upper{

@@ -6,20 +6,49 @@
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width initial-scale=1.0">
-        <link rel="icon" href="../static/debt.png">
+        <link rel="icon" href="../static/debtor.png">
         <link rel="stylesheet" href="../static/style.css">
         <script src="../static/script.js" type="text/javascript"></script>
+        <script src="/eel.js" type="text/javascript"></script>
     </head>
     <body class="container">
         <nav class="navigation">
-            <ul class="nav-list">
+            <ul>
                 <img src="../static/debt.png" alt="debt logo">
                 <li>Debtor Management</li>
-                <li>
-                    Search <input type="text" name="name_search" id="name_search" placeholder="Name" autocomplete="off" autofocus>
+                <li id="search">
+                    Search <input type="text" id="name_search" placeholder="Name" autocomplete="off" autofocus>
                 </li>
-                <li><a href="/logout">Log Out</a></li>
+                <li>
+                    <img src="../static/password.png" alt="password" style="cursor: pointer; width: 40px;" onclick="show_change_pass()">
+                </li>
             </ul>
         </nav>
+        <div class="change_pass" id="change_pass">
+            <b>Change Password</b><br>
+            <input type="password" id="new_password" placeholder="New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
+            <input type="password" id="confirmation" placeholder="Retype New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
+            <button type="button" id="changeP" onclick="passChange()">Change</button>
+        </div>
+        <div id="success">
+            <img src="../static/success.png">
+        </div>
+        <div>
+            <table class="debt-data">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Balance</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="add_product">
+
+        </div>
     </body>
 </html>
