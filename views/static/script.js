@@ -12,6 +12,14 @@ async function logg(){
 
 
 function show_change_pass(){
+    var image = document.getElementById("success");
+    image.style.display = "none";
+    var pass_data = document.getElementById("pass_data");
+    pass_data.style.display = "block";
+    var data = document.getElementById("new_password");
+    var data_confirmation = document.getElementById("confirmation");
+    data_confirmation.value = "";
+    data.value = "";
     var show = document.getElementById("change_pass");
     if (show.style.top === "-25%"){
         show.style.display = "block";
@@ -50,12 +58,12 @@ async function validate(){
 }
 
 async function passChange(){
-    var to_hide = document.getElementById("change_pass");
+    var animate = document.getElementById("change_pass");
+    var to_hide = document.getElementById("pass_data");
     var success = document.getElementById("success");
     var confirmed = document.getElementById("confirmation").value;
     await eel.change_pass(confirmed);
     to_hide.style.display = "none";
-    to_hide.style.top = "-25%"
     success.style.display = "block";
-    success.style.top = "-25%"
-}
+    animate.style.top = "-25%";
+}   

@@ -20,35 +20,35 @@
                     Search <input type="text" id="name_search" placeholder="Name" autocomplete="off" autofocus>
                 </li>
                 <li>
-                    <img src="../static/password.png" alt="password" style="cursor: pointer; width: 40px;" onclick="show_change_pass()">
+                    <img src="../static/password.png" alt="password" onclick="show_change_pass()">
                 </li>
+                <li style="cursor: pointer;">Loan</li>
             </ul>
         </nav>
         <div class="change_pass" id="change_pass">
-            <b>Change Password</b><br>
-            <input type="password" id="new_password" placeholder="New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
-            <input type="password" id="confirmation" placeholder="Retype New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
-            <button type="button" id="changeP" onclick="passChange()">Change</button>
+            <div id="pass_data">
+                <b>Change Password</b>
+                <form action="#">
+                    <input type="password" id="new_password" placeholder="New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
+                    <input type="password" id="confirmation" placeholder="Retype New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
+                    <button type="submit" id="changeP" onclick="passChange()">Change</button>
+                </form>
+            </div>
+            <div id="success">
+                <img src="../static/success.png">
+            </div>
         </div>
-        <div id="success">
-            <img src="../static/success.png">
-        </div>
-        <div>
-            <table class="debt-data">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Balance</th>
-                        <th>Due Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-        <div class="add_product">
-
-        </div>
+         <table class="debt-data">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Balance</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </body>
 </html>

@@ -6,16 +6,16 @@
 }
 
 .container{
-    background-color: white;
+    background-color: whitesmoke;
 }
-
+    
 #change_password{
     display: none;
 }
 
 .change_pass{
     position: fixed;
-    right: 23%;
+    right: 33%;
     top: -25%;
     padding: 2% 2%;
     background-color: rgb(205, 205, 205);
@@ -23,19 +23,19 @@
     transition: all 2s;
 }
 
-.change_pass input{
+#pass_data input{
     padding: 2% 2%;
     border: black solid 1px;
     border-radius: .3em;
     margin-bottom: 2%;
 }
 
-.change_pass input:focus{
+#pass_data input:focus{
     border: blue 1px solid;
     outline: blue 1px solid;
 }
 
-.change_pass button{
+#pass_data button{
     background: white;
     border: black solid 1px;
     border-radius: .2em;
@@ -43,7 +43,7 @@
     cursor: pointer;
 }
 
-.change_pass button:hover{
+#pass_data button:hover{
     padding: 3% 3%;
 }
 
@@ -131,13 +131,11 @@
 }
 
 .navigation ul li{
-    width: 60dvw;
-    position: relative;
-    display: inline-block;
+    width: 25dvw;
+    display: block;
     color: white;
     font-size: 150%;
-    padding: 0.5% 0.5%;
-    margin-right: 15%;
+    padding: 0.5% 0.5%; 
 }
 
 .navigation ul li input{
@@ -151,19 +149,19 @@
     outline: blue solid 2px;
 }
 
+.navigation ul li img{
+    cursor: pointer; 
+    width: 40px;
+    margin-left: 20%;
+}
+
 #success{
     display: none;
-    top: 10%;
-    right: 23%;
-    position: fixed;
-    background-color: rgb(205, 205, 205);
-    border-radius: .5em;
-    padding: 3.5% 5.4%;
-    transition: all 3s;
 }
 
 #success img{
     width: 60px;
+    padding: 3.5% 5.4%;
 }
 
 .upper{
