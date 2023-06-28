@@ -1,0 +1,4 @@
+eel
+flask
+cs50
+werkzeug
