@@ -5,8 +5,6 @@ if sys.stdout is None:
 if sys.stderr is None:
     sys.stderr = StringIO()
 import eel
-from os import mkdir
-from flask import session
 from cs50 import SQL
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -28,4 +26,10 @@ def change_pass(new_password):
     new_pass_hash = generate_password_hash(new_password)
     db.execute("UPDATE exdafgf SET hyansasd = ?", new_pass_hash)
 
-eel.start("templates/login.html",)
+@eel.expose
+def fetch_data():
+    datas = db.execute("SELECT * FROM debt ORDER BY name")
+    return datas
+
+eel.start("templates/login.html",
+            disable_caache = True)

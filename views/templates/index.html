@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="../static/style.css">
         <script src="../static/script.js" type="text/javascript"></script>
         <script src="/eel.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     </head>
     <body class="container">
         <nav class="navigation">
@@ -22,7 +23,7 @@
                 <li>
                     <img src="../static/password.png" alt="password" onclick="show_change_pass()">
                 </li>
-                <li style="cursor: pointer;">Loan</li>
+                <li onclick="loan()" style="cursor: pointer;">Loan</li>
             </ul>
         </nav>
         <div class="change_pass" id="change_pass">
@@ -38,7 +39,7 @@
                 <img src="../static/success.png">
             </div>
         </div>
-         <table class="debt-data">
+        <table class="debt-data">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -50,5 +51,40 @@
             <tbody>
             </tbody>
         </table>
+        <div class="add_loan" id="add_loan">
+            <div class="add_loan_content">
+                <span onclick="close_win()" class="close">✖</span>
+                <b>Add Loan</b>
+                <form action="#">
+                    <div>
+                        <p>Name of Borrower</p>
+                        <input type="text" id="loan_name" autocomplete="off" autofocus placeholder="Name" required onkeyup="ensure_no_space()">
+                    </div>
+                    <div>
+                        <p>Loan Amount</p>
+                        <input type="number" id="loan_amount" autocomplete="off" autofocus placeholder="Loan Amount" min="1" required onkeyup="ensure_number()">
+                    </div>
+                    <div>
+                        <p>Due Date</p>
+                        <input type="date" id="due_date" required>
+                    </div>
+                    <div>
+                        <button type="submit">Add Person</button><b id="add_success">Successfully Added!</b>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function(){
+            let inner = [];
+            datas = await eel.fetch_data()();
+            for (data of datas){
+                var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
+                var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
+                inner += '<tr><td>' + name + '</td><td>' + data.loan + '</td><td>' + 1000 + '</td><td>' + due_date + '</td></tr>'
+            }
+            document.querySelector("tbody").innerHTML = inner;
+        })
+    </script>
 </html>

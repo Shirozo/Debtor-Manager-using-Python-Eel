@@ -19,9 +19,11 @@ function show_change_pass(){
     var data = document.getElementById("new_password");
     var data_confirmation = document.getElementById("confirmation");
     data_confirmation.value = "";
+    data_confirmation.style = "revert"
     data.value = "";
+    data.style = "revert";
     var show = document.getElementById("change_pass");
-    if (show.style.top === "-25%"){
+    if (show.style.top === "-25%" || !(show.style.top)){
         show.style.display = "block";
         show.style.top = "10%";
     }
@@ -40,11 +42,9 @@ async function validate(){
         changeBtn.disabled = true;
     }
     else{
-        if (NewPassword.value.trim() != confirmation.value.trim()){
-            NewPassword.style.border = "red solid 1px";
-            NewPassword.style.outline = "red solid 1px";
-            confirmation.style.border = "red solid 1px";
-            confirmation.style.outline = "red solid 1px";
+        if (NewPassword.value.trim() != confirmation.value.trim() || await eel.login(confirmation.value.trim())()){
+            $("#new_password").css({"border" : "red solid 1px", "outline":"red solid 1px"})
+            $("#confirmation").css({"border" : "red solid 1px", "outline":"red solid 1px"})
             changeBtn.disabled = true;
         }
         else{
@@ -58,12 +58,40 @@ async function validate(){
 }
 
 async function passChange(){
-    var animate = document.getElementById("change_pass");
-    var to_hide = document.getElementById("pass_data");
-    var success = document.getElementById("success");
     var confirmed = document.getElementById("confirmation").value;
     await eel.change_pass(confirmed);
-    to_hide.style.display = "none";
-    success.style.display = "block";
-    animate.style.top = "-25%";
+    $("#pass_data").css("display", "none");
+    $("#success").css("display", "block"); 
+    $("#change_pass").css("top", "-25%");
 }   
+
+function loan(){
+    var table = document.querySelector("table");
+    if (!(table.style.filter) || table.style.filter === "blur(0px)"){
+        $("#add_loan").css("display", "revert");
+        table.style.filter = "blur(6px)";
+        table.setAttribute("style", "-webkit-filter: blur(6px)");
+        table.disabled = true;
+    }
+}
+
+function close_win(){
+    var table = document.querySelector("table");
+    table.style.filter = "blur(0)";
+    table.setAttribute("style", "-webkit-filter: blur(0)");
+    $("#add_loan").css("display", "none");
+}
+
+function ensure_no_space(){
+    var val = document.getElementById("loan_name");
+    if (val.value.trim() === ""){
+        $("#loan_name").css({"outline":"red solid 1px", "border":"solid red 1px"});
+    }
+    else{
+        val.style = "revert";
+    }
+}
+
+function ensure_number(){
+    var loan_amount = document
+}
