@@ -2,3 +2,5 @@ eel
 flask
 cs50
 werkzeug
+pyinstaller
+auto-py-to-exe
