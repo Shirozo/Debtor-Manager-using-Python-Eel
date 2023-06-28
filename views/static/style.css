@@ -9,6 +9,15 @@
     background-color: whitesmoke;
 }
 
+.actions{
+    width: 15dvw;
+}
+
+.actions b:hover, .debt-data thead tr th b:hover{
+    color: blue;
+    cursor: pointer;
+}
+
 .add_loan{
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
@@ -67,7 +76,7 @@
     padding: 1.5% 1.5%;
 }
 
-.add_loan .add_loan_content #add_success{
+.add_loan .add_loan_content form div b{
     display: none;
 }
 
@@ -91,29 +100,6 @@
     float: right;
 }
 
-#pass_data input{
-    padding: 2% 2%;
-    border: black solid 1px;
-    border-radius: .3em;
-    margin-bottom: 2%;
-}
-
-#pass_data input:focus{
-    border: blue 1px solid;
-    outline: blue 1px solid;
-}
-
-#pass_data button{
-    background: white;
-    border: black solid 1px;
-    border-radius: .2em;
-    padding: 2% 2%;
-    cursor: pointer;
-}
-
-#pass_data button:hover{
-    padding: 3% 3%;
-}
 
 .debt-data{
     border-collapse: collapse;
@@ -124,6 +110,10 @@
 .debt-data thead tr th{
     font-size: 150%;
     padding: 1% 1%;
+}
+
+.debt-data thead tr th, tbody tr td{
+    width: 25dvw;
 }
 
 .debt-data tbody tr:nth-child(odd){
@@ -157,7 +147,7 @@
     padding: 2% .5%;
     text-align: center;
     width: 20%;
-
+    
 }
 
 .login h6{
@@ -227,6 +217,29 @@
     margin-left: 20%;
 }
 
+#pass_data input{
+    padding: 2% 2%;
+    border: black solid 1px;
+    border-radius: .3em;
+    margin-bottom: 2%;
+}
+
+#pass_data input:focus{
+    border: blue 1px solid;
+    outline: blue 1px solid;
+}
+
+#pass_data button{
+    background: white;
+    border: black solid 1px;
+    border-radius: .2em;
+    padding: 2% 2%;
+    cursor: pointer;
+}
+
+#pass_data button:hover{
+    padding: 3% 3%;
+}
 #success{
     display: none;
 }

@@ -29,23 +29,30 @@
         <div class="change_pass" id="change_pass">
             <div id="pass_data">
                 <b>Change Password</b>
-                <form action="#">
+                <form>
                     <input type="password" id="new_password" placeholder="New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
                     <input type="password" id="confirmation" placeholder="Retype New Password" autofocus autocomplete="off" required onkeyup="validate()"><br>
-                    <button type="submit" id="changeP" onclick="passChange()">Change</button>
+                    <button type="button" id="changeP" onclick="passChange()">Change</button>
                 </form>
             </div>
             <div id="success">
                 <img src="../static/success.png">
             </div>
         </div>
-        <table class="debt-data">
+        <table class="debt-data" id="debt_data">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Amount</th>
                     <th>Balance</th>
                     <th>Due Date</th>
+                    <th>
+                        <b onclick="order_page(event)">Name</b>
+                        |
+                        <b onclick="order_page(event)">Due Date</b>
+                        |
+                        <b onclick="order_page(event)">Balance</b>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +62,7 @@
             <div class="add_loan_content">
                 <span onclick="close_win()" class="close">✖</span>
                 <b>Add Loan</b>
-                <form action="#">
+                <form>
                     <div>
                         <p>Name of Borrower</p>
                         <input type="text" id="loan_name" autocomplete="off" autofocus placeholder="Name" required onkeyup="ensure_no_space()">
@@ -66,10 +73,10 @@
                     </div>
                     <div>
                         <p>Due Date</p>
-                        <input type="date" id="due_date" required>
+                        <input type="date" id="due_date" required onchange="ensure_date()">
                     </div>
                     <div>
-                        <button type="submit">Add Person</button><b id="add_success" onclick="add_person()">Successfully Added!</b>
+                        <button type="button"  onclick="add_person()">Add Person</button><b id="add_success">Successfully Added!</b><b id="unsuccessful">Chech Your Inputs!</b>
                     </div>
                 </form>
             </div>
@@ -78,11 +85,20 @@
     <script>
         document.addEventListener("DOMContentLoaded", async function(){
             let inner = [];
-            datas = await eel.fetch_data()();
+            var datas = await eel.fetch_data('name')();
             for (data of datas){
                 var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
                 var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
-                inner += '<tr><td>' + name + '</td><td>' + data.loan + '</td><td>' + 1000 + '</td><td>' + due_date + '</td></tr>'
+                inner+= '<tr>' + 
+                            '<td id="hasdhhj_v">' + name + '</td>' + 
+                            '<td>' + data.loan + '</td>'+
+                            '<td>' + data.balance + '</td>'+
+                            '<td>' + due_date + '</td>'+
+                            '<td class=actions>'+
+                                '<b onclick=lessen_debt()>ADD</b> | '+
+                                '<b onclick="remove('+ data.id +')">REMOVE</b>'+
+                            '</td>'+
+                        '</tr>'
             }
             document.querySelector("tbody").innerHTML = inner;
         })
