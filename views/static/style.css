@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.add_loan{
+.add_style{
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
@@ -39,7 +39,7 @@
     }
 }
 
-.add_loan .add_loan_content{
+.add_loan_content{
     margin: 15% auto;
     width: 20dvw;
     background-color: rgb(205, 205, 205);
@@ -47,24 +47,25 @@
     padding: 1% 1%;
 }
 
-.add_loan .add_loan_content p{
+.add_loan_content p{
     margin-top: 5%;
 }
 
-.add_loan .add_loan_content input[type=text],[type=number]{
+input[type=text],[type=number]{
     border-radius: .5em;
     border: solid black 1px ;
     padding: 3% 3%;
+    margin-bottom: 3%;
 }
 
-.add_loan .add_loan_content input[type=date]{
+input[type=date]{
     padding: 2% 2%;
     border-radius: .5em;
     border: solid black 1px;
     margin-bottom: 5%;
 }
 
-.add_loan .add_loan_content button{
+button{
     cursor: pointer;
     border: transparent;
     padding: 1% 1%;
@@ -72,15 +73,11 @@
     background-color: rgb(85, 85, 255);
 }
 
-.add_loan .add_loan_content button:hover{
+button:hover{
     padding: 1.5% 1.5%;
 }
 
-.add_loan .add_loan_content form div b{
-    display: none;
-}
-
-#change_password{
+.add_loan_content form div b{
     display: none;
 }
 
@@ -99,7 +96,6 @@
     cursor: pointer;
     float: right;
 }
-
 
 .debt-data{
     border-collapse: collapse;
@@ -227,6 +223,32 @@
     margin-top: 5%;
 }
 
+.payment_content{
+    margin: 10% auto;
+    background: white;
+    width: 20dvw;
+    padding: 1% 2%;
+}
+
+.payment_content #lastP{
+    margin-bottom: 5%;
+}
+
+.upper{
+    background-color: white;
+    border-radius: .5em;
+    padding: 1%;
+    outline: rgb(255, 225, 254);
+}
+
+.upper h6{
+    font-size: 250%;
+}
+
+#change_password{
+    display: none;
+}
+
 #pass_data input{
     padding: 2% 2%;
     border: black solid 1px;
@@ -250,6 +272,7 @@
 #pass_data button:hover{
     padding: 3% 3%;
 }
+
 #success{
     display: none;
 }
@@ -257,15 +280,4 @@
 #success img{
     width: 60px;
     padding: 3.5% 5.4%;
-}
-
-.upper{
-    background-color: white;
-    border-radius: .5em;
-    padding: 1%;
-    outline: rgb(255, 225, 254);
-}
-
-.upper h6{
-    font-size: 250%;
 }

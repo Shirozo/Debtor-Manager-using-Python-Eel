@@ -17,7 +17,7 @@
 let SORT_BY = "name";
 
 async function add_person(){
-    if (ensure_no_space() && ensure_number() && await ensure_date()){
+    if (ensure_no_space() && ensure_number() && await ensure_date('due_date')){
         var date = $("#due_date").val();
         var loan = $("#loan_amount").val()
         var name = $("#loan_name").val();
@@ -35,6 +35,15 @@ async function add_person(){
     }
 }
 
+function close_payment(){
+    $("#payment_con").css("display","none");
+    document.getElementById("payment_con").innerHTML = [];
+}
+
+function close_confirm(){
+    $("#confirm_div").css("display","none");
+}
+
 function close_win(){
     $("table").css({"-webkit-filter": "blur(0)", "filter" : "blur(0)"})
     $("#add_loan, #add_success, #unsuccessful").css("display", "none");
@@ -42,17 +51,18 @@ function close_win(){
     $("#loan_amount, #loan_name, #due_date").css({"border" : "black solid 1px", "outline" : "none"})
 }
 
-async function ensure_date(){
-    var datetime = $("#due_date").val();
+async function ensure_date(id, due=""){
+    var ids = "#"+id;
+    var datetime = $(ids).val();
     if (datetime){
-        if(await eel.date_checker(datetime)()){
-            $("#due_date").css({"border" : "black solid 1px", "outline" : "none"})
+        if(await eel.date_checker(datetime, due)()){
+            $(ids).css({"border" : "black solid 1px", "outline" : "none"})
             return true
         }
-        $("#due_date").css({"border" : "red solid 1px", "outline" : "red solid 1px"})
+        $(ids).css({"border" : "red solid 1px", "outline" : "red solid 1px"})
         return false
     }
-    $("#due_date").css({"border" : "red solid 1px", "outline" : "red solid 1px"})
+    $(ids).css({"border" : "red solid 1px", "outline" : "red solid 1px"})
     return false
 }
 
@@ -125,8 +135,8 @@ async function order_page(event){
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+
                     '<td class=actions>'+
-                        '<b onclick=lessen_debt()>ADD</b> | '+
-                        '<b onclick="remove('+ data.id +')">REMOVE</b>'+
+                        '<b onclick=payment_function('+ data.id +')>ADD</b> | '+
+                        '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
                     '</td>'+
                 '</tr>'
     }
@@ -148,9 +158,51 @@ async function passChange(){
     $("#change_pass").css("top", "-25%");
 }
 
-async function remove(id){
-    await eel.remover(id);
-    await order_page(SORT_BY);
+async function payment_function(id){
+    var conElement = document.getElementById('payment_con');
+    conElement.innerHTML = [];
+    var user_data = await eel.fetch_single_user(id)();
+    var safe_name = user_data.name.replace('<', '&lt;').replace('&', '&amp;');
+    var safe_due_date = user_data.due_date.replace('<', '&lt;').replace('&', '&amp;');
+    let template = ['<div class="payment_content">' +
+                        '<span onclick="close_payment()" class="close">✖</span>' +
+                        '<b>Payment For: ' + safe_name + '</b>' +
+                        '<p id="balansya">Balance: '+ user_data.balance +'</p>' +
+                        '<p id="lastP">Due Date: '+ safe_due_date +'</p>' +
+                        '<form>' +
+                            '<div>' +
+                                '<p>Payment Amount</p>' +
+                                '<input type="number" id="paymentAmount" autofocus autocomplete="off" placeholder="Amount">'+
+                            '</div>' +
+                            '<div>' +
+                                '<p>Date Paid</p>' +
+                                '<input type="date" id="tryMe" onchange="ensure_date(id="tryMe",'+ user_data.due_date +')">'+
+                            '</div>' +
+                            '<button type="button">Add Payment</button>'+
+                        '</form>' +
+                    '</div>'];
+    conElement.innerHTML = template;
+    conElement.style.display = "block";
+}
+
+async function remove(){
+    var id_rmf = $("#hid").val();
+    var passWord = $("#pasd").val();
+    if (await eel.login(passWord)()){
+        $("#pasd").css({"border" : "black solid 1px", "outline" : "none"});
+        await eel.remover(id_rmf);
+        await order_page(SORT_BY);
+    }
+    else{
+        $("#pasd").css({"border" : "red solid 1px", "outline" : "red solid 1px"});
+    }
+    close_confirm();
+
+}
+
+function remove_show(id){
+    $("#confirm_div").css("display","block");
+    $("#hid").val(id);
 }
 
 async function search_p(){
@@ -166,8 +218,8 @@ async function search_p(){
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+
                     '<td class=actions>'+
-                        '<b onclick=lessen_debt()>ADD</b> | '+
-                        '<b onclick="remove('+ data.id +')">REMOVE</b>'+
+                        '<b onclick=payment_function('+ data.id +')>ADD</b> | '+
+                        '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
                     '</td>'+
                 '</tr>'
     }

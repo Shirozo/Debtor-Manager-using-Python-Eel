@@ -58,10 +58,25 @@
             <tbody>
             </tbody>
         </table>
+        <div class="add_style" id="confirm_div">
+            <div class="payment_content">
+                <span class="close" onclick="close_confirm()">✖</span>
+                <form>
+                    <div>
+                        <p>Enter Your Password</p>
+                        <input type="text" id="pasd" autocomplete="off" autofocus placeholder="Password">
+                        <input type="hidden" id="hid">
+                    </div>
+                    <div>
+                        <button type="button" onclick="remove()">Enter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="no_data" id="no_data">
             <img src="../icons/not_found.png">
         </div>
-        <div class="add_loan" id="add_loan">
+        <div class="add_style" id="add_loan">
             <div class="add_loan_content">
                 <span onclick="close_win()" class="close">✖</span>
                 <b>Add Loan</b>
@@ -76,13 +91,15 @@
                     </div>
                     <div>
                         <p>Due Date</p>
-                        <input type="date" id="due_date" required onchange="ensure_date()">
+                        <input type="date" id="due_date" required onchange="ensure_date('due_date')">
                     </div>
                     <div>
                         <button type="button"  onclick="add_person()">Add Person</button><b id="add_success">Successfully Added!</b><b id="unsuccessful">Chech Your Inputs!</b>
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="add_style" id="payment_con">
         </div>
     </body>
     <script>
@@ -103,8 +120,8 @@
                                 '<td>' + data.balance + '</td>'+
                                 '<td>' + due_date + '</td>'+
                                 '<td class=actions>'+
-                                    '<b onclick=lessen_debt()>ADD</b> | '+
-                                    '<b onclick="remove('+ data.id +')">REMOVE</b>'+
+                                    '<b onclick=payment_function('+ data.id +')>ADD</b> | '+
+                                    '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
                                 '</td>'+
                             '</tr>'
                 }
