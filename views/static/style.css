@@ -217,6 +217,16 @@
     margin-left: 20%;
 }
 
+.no_data{
+    display: none;
+    text-align: center;
+}
+
+.no_data img{
+    width: 400px;
+    margin-top: 5%;
+}
+
 #pass_data input{
     padding: 2% 2%;
     border: black solid 1px;

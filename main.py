@@ -28,14 +28,15 @@ def change_pass(new_password):
     db.execute("UPDATE exdafgf SET hyansasd = ?", new_pass_hash)
 
 @eel.expose
-def fetch_data(order):
+def fetch_data(order, select="%"):
     if order.lower() == "balance":
-        datas = db.execute("SELECT * FROM debt ORDER BY balance DESC")
+        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? ORDER BY balance DESC LIMIT 15", select)
     elif order.lower() == "due date":
-        datas = db.execute("SELECT * FROM debt ORDER BY due_date")
+        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? ORDER BY due_date LIMIT 15", select)
     else:
-        datas = db.execute("SELECT * FROM debt ORDER BY name")
-    return datas
+        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? ORDER BY name LIMIT 15", select)
+    if datas: return datas 
+    else: return ""
 
 
 @eel.expose

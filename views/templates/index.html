@@ -6,7 +6,7 @@
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width initial-scale=1.0">
-        <link rel="icon" href="../static/debtor.png">
+        <link rel="icon" href="../icons/debtor.png">
         <link rel="stylesheet" href="../static/style.css">
         <script src="../static/script.js" type="text/javascript"></script>
         <script src="/eel.js" type="text/javascript"></script>
@@ -15,13 +15,13 @@
     <body class="container">
         <nav class="navigation">
             <ul>
-                <img src="../static/debt.png" alt="debt logo">
+                <img src="../icons/debt.png" alt="debt logo">
                 <li>Debtor Management</li>
                 <li id="search">
-                    Search <input type="text" id="name_search" placeholder="Name" autocomplete="off" autofocus>
+                    Search <input type="text" id="name_search" placeholder="Name" autocomplete="off" autofocus onkeyup="search_p()">
                 </li>
                 <li>
-                    <img src="../static/password.png" alt="password" onclick="show_change_pass()">
+                    <img src="../icons/password.png" alt="password" onclick="show_change_pass()">
                 </li>
                 <li onclick="loan()" style="cursor: pointer;">Loan</li>
             </ul>
@@ -36,7 +36,7 @@
                 </form>
             </div>
             <div id="success">
-                <img src="../static/success.png">
+                <img src="../icons/success.png">
             </div>
         </div>
         <table class="debt-data" id="debt_data">
@@ -58,6 +58,9 @@
             <tbody>
             </tbody>
         </table>
+        <div class="no_data" id="no_data">
+            <img src="../icons/not_found.png">
+        </div>
         <div class="add_loan" id="add_loan">
             <div class="add_loan_content">
                 <span onclick="close_win()" class="close">✖</span>
@@ -85,22 +88,28 @@
     <script>
         document.addEventListener("DOMContentLoaded", async function(){
             let inner = [];
-            var datas = await eel.fetch_data('name')();
-            for (data of datas){
-                var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
-                var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
-                inner+= '<tr>' + 
-                            '<td id="hasdhhj_v">' + name + '</td>' + 
-                            '<td>' + data.loan + '</td>'+
-                            '<td>' + data.balance + '</td>'+
-                            '<td>' + due_date + '</td>'+
-                            '<td class=actions>'+
-                                '<b onclick=lessen_debt()>ADD</b> | '+
-                                '<b onclick="remove('+ data.id +')">REMOVE</b>'+
-                            '</td>'+
-                        '</tr>'
+            var datas = await eel.fetch_data(order = 'name')();
+            if (!(datas)){
+                $("#no_data").css("display", "block");
             }
-            document.querySelector("tbody").innerHTML = inner;
-        })
+            else{
+                $("#no_data").css("display", "none");
+                for (let data of datas){
+                    var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
+                    var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
+                    inner+= '<tr>' + 
+                                '<td id="hasdhhj_v">' + name + '</td>' + 
+                                '<td>' + data.loan + '</td>'+
+                                '<td>' + data.balance + '</td>'+
+                                '<td>' + due_date + '</td>'+
+                                '<td class=actions>'+
+                                    '<b onclick=lessen_debt()>ADD</b> | '+
+                                    '<b onclick="remove('+ data.id +')">REMOVE</b>'+
+                                '</td>'+
+                            '</tr>'
+                }
+                document.querySelector("tbody").innerHTML = inner;
+            }
+        });
     </script>
 </html>

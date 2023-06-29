@@ -1,3 +1,4 @@
+//Deactivated as of now as it is in devlopment
 // document.onkeydown = (e) => {
 //     if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
 //         e.preventDefault();
@@ -24,17 +25,19 @@ async function add_person(){
         $("#unsuccessful").css("display", "none")
         $("#add_success").css("display", "inline-block");
         await order_page(SORT_BY);
+        $("#loan_amount, #loan_name, #due_date").val("");
         $("#debt_data")
 
     }
     else{
         $("#unsuccessful").css("display", "inline-block")
+        $("#add_success").css("display", "none");
     }
 }
 
 function close_win(){
     $("table").css({"-webkit-filter": "blur(0)", "filter" : "blur(0)"})
-    $("#add_loan").css("display", "none");
+    $("#add_loan, #add_success, #unsuccessful").css("display", "none");
     $("#loan_amount, #loan_name, #due_date").val("");
     $("#loan_amount, #loan_name, #due_date").css({"border" : "black solid 1px", "outline" : "none"})
 }
@@ -107,12 +110,13 @@ async function order_page(event){
     try{
         var order = event.srcElement.innerHTML;
     }
-    catch(err){
+    catch{
         var order = event;
     }
     SORT_BY = order;
-    var datas = await eel.fetch_data(order)();
-    for (data of datas){
+    var name_to_search = $("#name_search").val();
+    var datas = await eel.fetch_data(order, name_to_search+"%")();
+    for (let data of datas){
         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
         var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
         inner+= '<tr>' + 
@@ -126,7 +130,14 @@ async function order_page(event){
                     '</td>'+
                 '</tr>'
     }
-    document.querySelector("tbody").innerHTML = inner;
+    if (inner != ""){
+        document.querySelector("tbody").innerHTML = inner;
+        $("#no_data").css("display", "none");
+    }
+    else{
+        document.querySelector("tbody").innerHTML = []
+        $("#no_data").css("display", "block");
+    }
 }
 
 async function passChange(){
@@ -140,7 +151,34 @@ async function passChange(){
 async function remove(id){
     await eel.remover(id);
     await order_page(SORT_BY);
-    $("#debt_data")
+}
+
+async function search_p(){
+    var name_to_search = $("#name_search").val();
+    var datas = await eel.fetch_data(SORT_BY, name_to_search+"%")();
+    let inner = [];
+    for (let data of datas){    
+        var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
+        var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
+        inner+= '<tr>' + 
+                    '<td id="hasdhhj_v">' + name + '</td>' + 
+                    '<td>' + data.loan + '</td>'+
+                    '<td>' + data.balance + '</td>'+
+                    '<td>' + due_date + '</td>'+
+                    '<td class=actions>'+
+                        '<b onclick=lessen_debt()>ADD</b> | '+
+                        '<b onclick="remove('+ data.id +')">REMOVE</b>'+
+                    '</td>'+
+                '</tr>'
+    }
+    if (inner != ""){
+        document.querySelector("tbody").innerHTML = inner;
+        $("#no_data").css("display", "none");
+    }
+    else{
+        document.querySelector("tbody").innerHTML = []
+        $("#no_data").css("display", "block");
+    }
 }
 
 function show_change_pass(){
