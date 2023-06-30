@@ -52,10 +52,18 @@ function close_win(){
 }
 
 async function ensure_date(id, due=""){
+    if (due != ""){
+        var due_id = "#"+due;
+        var due_d = $(due_id).val();
+        alert(due_d);
+    }
+    else{
+        due_d = "";
+    }
     var ids = "#"+id;
     var datetime = $(ids).val();
     if (datetime){
-        if(await eel.date_checker(datetime, due)()){
+        if(await eel.date_checker(datetime, due_d)()){
             $(ids).css({"border" : "black solid 1px", "outline" : "none"})
             return true
         }
@@ -78,20 +86,21 @@ function ensure_no_space(){
     }
 }
 
-function ensure_number(){
-    var amount = $("#loan_amount").val()
+function ensure_number(input_id){
+    var inputID = "#"+input_id;
+    var amount = $(inputID).val()
     if ($.isNumeric(amount)){
         if (amount <= 0 ){
-            $("#loan_amount").css({"border" : "red solid 1px", "outline" : "red solid 1px"});
+            $(inputID).css({"border" : "red solid 1px", "outline" : "red solid 1px"});
             return false;
         }
         else{
-            $("#loan_amount").css({"border" : "black solid 1px", "outline" : "none"});
+            $(inputID).css({"border" : "black solid 1px", "outline" : "none"});
             return true;
         }
     }
     else{
-        $("#loan_amount").css({"border" : "red solid 1px", "outline" : "red solid 1px"});
+        $(inputID).css({"border" : "red solid 1px", "outline" : "red solid 1px"});
         return false;
     }
 }
@@ -164,7 +173,7 @@ async function payment_function(id){
     var user_data = await eel.fetch_single_user(id)();
     var safe_name = user_data.name.replace('<', '&lt;').replace('&', '&amp;');
     var safe_due_date = user_data.due_date.replace('<', '&lt;').replace('&', '&amp;');
-    let template = ['<div class="payment_content">' +
+    let template = '<div class="payment_content">' +
                         '<span onclick="close_payment()" class="close">✖</span>' +
                         '<b>Payment For: ' + safe_name + '</b>' +
                         '<p id="balansya">Balance: '+ user_data.balance +'</p>' +
@@ -172,16 +181,17 @@ async function payment_function(id){
                         '<form>' +
                             '<div>' +
                                 '<p>Payment Amount</p>' +
-                                '<input type="number" id="paymentAmount" autofocus autocomplete="off" placeholder="Amount">'+
+                                '<input type="number" id="paymentAmount" autofocus autocomplete="off" placeholder="Amount" onkeyup="ensure_number(\'paymentAmount\')">'+
                             '</div>' +
                             '<div>' +
                                 '<p>Date Paid</p>' +
-                                '<input type="date" id="tryMe" onchange="ensure_date(id="tryMe",'+ user_data.due_date +')">'+
+                                '<input type="hidden" id="due_val" value='+ safe_due_date+'>'+
+                                '<input type="date" id="tryMe" onchange="ensure_date(id=\'tryMe\',due=\'due_val\')">'+
                             '</div>' +
                             '<button type="button">Add Payment</button>'+
                         '</form>' +
-                    '</div>'];
-    conElement.innerHTML = template;
+                    '</div>';
+    conElement.innerHTML = template.trim();
     conElement.style.display = "block";
 }
 

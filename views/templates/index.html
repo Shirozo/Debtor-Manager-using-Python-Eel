@@ -63,8 +63,8 @@
                 <span class="close" onclick="close_confirm()">✖</span>
                 <form>
                     <div>
-                        <p>Enter Your Password</p>
-                        <input type="text" id="pasd" autocomplete="off" autofocus placeholder="Password">
+                        <p style="margin-top: 10%;">Enter Your Password</p>
+                        <input type="text" id="pasd" autocomplete="off" autofocus placeholder="Password" style="border-radius: 0;">
                         <input type="hidden" id="hid">
                     </div>
                     <div>
@@ -87,7 +87,7 @@
                     </div>
                     <div>
                         <p>Loan Amount</p>
-                        <input type="number" id="loan_amount" autocomplete="off" autofocus placeholder="Loan Amount" min="1" required onkeyup="ensure_number()">
+                        <input type="number" id="loan_amount" autocomplete="off" autofocus placeholder="Loan Amount" min="1" required onkeyup="ensure_number('loan_amount')">
                     </div>
                     <div>
                         <p>Due Date</p>
