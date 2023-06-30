@@ -144,7 +144,7 @@ async function order_page(event){
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+
                     '<td class=actions>'+
-                        '<b onclick=payment_function('+ data.id +')>ADD</b> | '+
+                        '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
                         '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
                     '</td>'+
                 '</tr>'
@@ -188,11 +188,15 @@ async function payment_function(id){
                                 '<input type="hidden" id="due_val" value='+ safe_due_date+'>'+
                                 '<input type="date" id="tryMe" onchange="ensure_date(id=\'tryMe\',due=\'due_val\')">'+
                             '</div>' +
-                            '<button type="button">Add Payment</button>'+
+                            '<button type="button" onclick="paydebt()">Add Payment</button>'+
                         '</form>' +
                     '</div>';
     conElement.innerHTML = template.trim();
     conElement.style.display = "block";
+}
+
+async function paydebt(){
+    alert(true)
 }
 
 async function remove(){
@@ -228,7 +232,7 @@ async function search_p(){
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+
                     '<td class=actions>'+
-                        '<b onclick=payment_function('+ data.id +')>ADD</b> | '+
+                        '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
                         '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
                     '</td>'+
                 '</tr>'
