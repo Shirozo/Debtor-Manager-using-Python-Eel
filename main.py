@@ -62,7 +62,7 @@ def add_debt(name : str, amount : float, dueDate : str) -> None:
     `Add` new debt or borrower to the database.
     """
 
-    db.execute("INSERT INTO debt(name, loan, balance, due_date) VALUES(?, ?, ?, ?)", name.title(), amount, amount, dueDate)
+    db.execute("INSERT INTO debt(name, loan, balance, due_date, status) VALUES(?, ?, ?, ?, True)", name.title(), amount, amount, dueDate)
     return
 
 
@@ -111,7 +111,29 @@ def fetch_single_user(user_id : int) -> object:
     return json.dumps(user_data)
 
 @eel.expose
-def debtpay(id, amount, datepaid):
-    return None
+def debtpay(uid, amount, datepaid) -> object:
+    """
+    This function update your balance in the database. It takes an 3 argument:
+    `id`, `amount`, and `datepaid`\n
+    `id` is the id of the user or account.\n
+    `amount` the amount paid for that date.\n
+    `datepaid` when that debt was paid.\n
+    This will then add the transaction to the database and update your balance.
+    """
+    try:
+        balance = db.execute("SELECT balance FROM debt WHERE id = ?", uid)[0]["balance"]
+        amount = int(amount)
+        new_balance = balance - amount
+        if new_balance <= 0:
+            status = False
+        else:
+            status = True
+        db.execute("INSERT INTO d_transaction(userID, paymentAMOUNT, datePAID, status) VALUES(?, ?, ?, ?)", uid, amount, datepaid, status)
+        db.execute("UPDATE debt SET balance = ? WHERE id = ?", new_balance, uid)
+        return json.dumps({"status" : 200})
+    except Exception:
+        return json.dumps({"status" : 405})
+
+
 eel.start("templates/login.html",
             disable_cache = True)

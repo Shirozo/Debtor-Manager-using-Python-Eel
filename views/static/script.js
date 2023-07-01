@@ -122,6 +122,10 @@ function ensure_number(input_id){
     }
 }
 
+function get_folder(event){
+    alert(event);
+}
+
 function loan(){
     var table = document.querySelector("table");
     if (!(table.style.filter) || table.style.filter === "blur(0px)"){
@@ -207,7 +211,7 @@ async function payment_function(id){
                                 '<p>Date Paid</p>' +
                                 '<input type="date" id="tryMe" onchange="ensure_date(id=\'tryMe\',due=\'due_val\')">'+
                             '</div>' +
-                            '<button type="button" onclick="paydebt()">' +
+                            '<button id="paysubmit" type="button" onclick="paydebt()">' +
                                 '<p id="paymentBTN">Add Payment</p>'+
                                 '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>' +
                             '</button>'+
@@ -220,16 +224,27 @@ async function payment_function(id){
 
 async function paydebt(){
     if (await ensure_date(id='tryMe',due='due_val') && ensure_number('paymentAmount')){
+        document.getElementById("paysubmit").disabled = true;
         $("#paymentBTN").css("display", "none")
         var user_id = $("#user_id").val();
         var amount_paid = $("#paymentAmount").val();
         var datepaid = $("#tryMe").val();
         $(".lds-ellipsis").css("display", "block")
-        var stats = await eel.debtpay(user_id, amount_paid, datepaid);
-        setTimeout(() => {
+        var stats = JSON.parse(await eel.debtpay(user_id, amount_paid, datepaid)());
+        setTimeout(async () => {
             $(".lds-ellipsis").css("display", "none");
             $("#paymentBTN").css("display", "block")
+            document.getElementById("paysubmit").disabled = false;
+            if (stats.status == 200){ 
+                await payment_function(user_id);
+                await order_page(SORT_BY);
+                $("#pay_success").css("display", "inline-block")
+            }
+            else{
+                $("#pay_error").css("display", "inline-block");
+            }
         }, 3000);
+
     }
     else{
         $("#pay_error").css("display", "inline-block");

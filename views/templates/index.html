@@ -23,7 +23,15 @@
                 <li>
                     <img src="../icons/password.png" alt="password" onclick="show_change_pass()">
                 </li>
-                <li onclick="loan()" style="cursor: pointer;">Loan</li>
+                <li>
+                    <p onclick="loan()" style="cursor: pointer; width: 20%">Loan</p>
+                </li>
+                <li>
+                    <input id="downloadFILE" type="file" webkitdirectory="true" directory multiple="false" style="display: none;" onchange="get_folder(event)">
+                    <label for="downloadFILE">
+                        <p style="cursor:pointer">Download</p>
+                    </label>
+                </li>
             </ul>
         </nav>
         <div class="change_pass" id="change_pass">
