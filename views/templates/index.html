@@ -27,13 +27,13 @@
                     <p onclick="loan()" style="cursor: pointer; width: 20%">Loan</p>
                 </li>
                 <li>
-                    <input id="downloadFILE" type="file" webkitdirectory="true" directory multiple="false" style="display: none;" onchange="get_folder(event)">
-                    <label for="downloadFILE">
-                        <p style="cursor:pointer">Download</p>
-                    </label>
+                    <p onclick="show_download()" style="cursor: pointer; width: 20%">Download</p>
                 </li>
             </ul>
         </nav>
+        <div id="loading">
+            <div class="lds-dual-ring"></div>
+        </div>
         <div class="change_pass" id="change_pass">
             <div id="pass_data">
                 <b>Change Password</b>
@@ -60,19 +60,33 @@
                         <b onclick="order_page(event)">Due Date</b>
                         |
                         <b onclick="order_page(event)">Balance</b>
+                        |
+                        <b onclick="order_page(event)">Paid</b>
                     </th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
         </table>
+        <div class="add_style" id="download-div">
+            <div class="download-content">
+                <span class="close" onclick="close_confirm('download-div')">✖</span>
+                <b>Download Debt Data</b><br><br>
+                <p>Select Name</p>
+                <select name="Names" id="names_opt">
+                </select>
+                <div>
+                    <button type="button" onclick="download()">Download</button>
+                </div>
+            </div>
+        </div>
         <div class="add_style" id="confirm_div">
-            <div class="payment_content">
+            <div class="confirm_div_content">
                 <span class="close" onclick="close_confirm('confirm_div')">✖</span>
                 <form>
                     <div>
                         <p style="margin-top: 10%;">Enter Your Password</p>
-                        <input type="text" id="pasd" autocomplete="off" autofocus placeholder="Password" style="border-radius: 0;">
+                        <input type="password" id="pasd" autocomplete="off" autofocus placeholder="Password" style="border-radius: 0;">
                         <input type="hidden" id="hid">
                     </div>
                     <div>
@@ -113,7 +127,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", async function(){
             let inner = [];
-            var datas = JSON.parse(await eel.fetch_data(order = 'name')());
+            var datas = JSON.parse(await eel.fetch_data(order = 'name', qstatus = 1)());
             if (!(datas)){
                 $("#no_data").css("display", "block");
             }

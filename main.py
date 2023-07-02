@@ -10,6 +10,7 @@ from cs50 import SQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import json
+from helpers import downloader
 
 db = SQL("sqlite:///views/database/database.db")
 
@@ -40,7 +41,7 @@ def change_pass(new_password : str) -> None:
 
 
 @eel.expose
-def fetch_data(order : str, select : str = "%" ) -> object:
+def fetch_data(order : str, qstatus : int ,select : str = "%") -> object:
     """
     This function `fetches` all the `data` in the database based on
     their `order` and what data to `select`. If the fetch data is empty, it 
@@ -48,12 +49,30 @@ def fetch_data(order : str, select : str = "%" ) -> object:
     """
 
     if order.lower() == "balance":
-        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? ORDER BY balance DESC LIMIT 15", select)
+        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? AND STATUS = ? ORDER BY balance DESC", select, qstatus)
     elif order.lower() == "due date":
-        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? ORDER BY due_date LIMIT 15", select)
+        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? AND STATUS = ? ORDER BY due_date", select, qstatus)
     else:
-        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? ORDER BY name LIMIT 15", select)
+        datas = db.execute("SELECT * FROM debt WHERE name LIKE ? AND STATUS = ? ORDER BY name", select, qstatus) 
     return json.dumps(datas)
+
+
+@eel.expose
+def fetch_single_user(user_id : int) -> object:
+    """
+    Function to fetch a single user in the database.
+    """
+    user_data = db.execute("SELECT * FROM debt WHERE id = ?", user_id)
+    return json.dumps(user_data)
+
+
+@eel.expose
+def fetch_username():
+    """
+    Function to fetch just the `name` in the database.
+    """
+    names = db.execute("SELECT id, name FROM debt ORDER BY status DESC, name")
+    return json.dumps(names)
 
 
 @eel.expose
@@ -103,14 +122,6 @@ def remover(idRM : int) -> None:
 
 
 @eel.expose
-def fetch_single_user(user_id : int) -> object:
-    """
-    Function to fetch a single user in the database.
-    """
-    user_data = db.execute("SELECT * FROM debt WHERE id = ?", user_id)
-    return json.dumps(user_data)
-
-@eel.expose
 def debtpay(uid, amount, datepaid) -> object:
     """
     This function update your balance in the database. It takes an 3 argument:
@@ -128,12 +139,17 @@ def debtpay(uid, amount, datepaid) -> object:
             status = False
         else:
             status = True
-        db.execute("INSERT INTO d_transaction(userID, paymentAMOUNT, datePAID, status) VALUES(?, ?, ?, ?)", uid, amount, datepaid, status)
-        db.execute("UPDATE debt SET balance = ? WHERE id = ?", new_balance, uid)
+        db.execute("INSERT INTO d_transaction(userID, paymentAMOUNT, datePAID) VALUES(?, ?, ?)", uid, amount, datepaid)
+        db.execute("UPDATE debt SET balance = ?, status = ? WHERE id = ?", new_balance, status, uid)
         return json.dumps({"status" : 200})
-    except Exception:
+    except Exception as e:
+        print(e)
         return json.dumps({"status" : 405})
 
+@eel.expose
+def download_data(uid):
+    downloader(uid)
+    return
 
 eel.start("templates/login.html",
             disable_cache = True)

@@ -7,6 +7,7 @@
 
 .container{
     background-color: whitesmoke;
+    width: 100dvw;
 }
 
 .actions{
@@ -42,6 +43,7 @@
 .add_loan_content{
     margin: 15% auto;
     width: 20dvw;
+    height: 42dvh;
     background-color: rgb(205, 205, 205);
     font-size: 120%;
     padding: 1% 1%;
@@ -51,7 +53,7 @@
     margin-top: 5%;
 }
 
-input[type=text],[type=number]{
+input[type=text],[type=number],[type=password]{
     border-radius: .5em;
     border: solid black 1px ;
     padding: 3% 3%;
@@ -84,7 +86,7 @@ button:hover{
 .change_pass{
     z-index: 1;
     position: fixed;
-    right: 33%;
+    left: 40%;
     top: -25%;
     padding: 2% 2%;
     background-color: rgb(205, 205, 205);
@@ -95,6 +97,14 @@ button:hover{
 .close{
     cursor: pointer;
     float: right;
+}
+
+.confirm_div_content{
+    margin: 10% auto;
+    background: white;
+    width: 20dvw;
+    height: 18dvh;
+    padding: 1% 2%;
 }
 
 
@@ -118,8 +128,30 @@ button:hover{
 }
 
 .debt-data tbody tr td{
-    padding: 1% 1%;
+    padding: 0.5% 0.5%;
     font-size: 120%;
+    width: 20dvw;
+}
+
+.download-content{
+    background-color: white;
+    width: 20dvw;
+    height: 25dvh;
+    text-align: center;
+    margin: 10% auto;
+    padding: 1% 1%;
+}
+
+.download-content b, .download-content p{
+    font-size: 140%;
+}
+
+.download-content select{
+    width: 40%;
+    padding: 2% 2%;
+    border: black solid 1px;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .error{
@@ -194,6 +226,33 @@ button:hover{
     }
   }
   
+.lds-dual-ring {
+    display: inline-block;
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    top: 25%;
+    left: 46%;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 84px;
+    height: 84px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 10px solid black;
+    border-color: black transparent black transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 .login{
     background-color: rgb(255, 250, 255);
@@ -233,8 +292,22 @@ button:hover{
     color: blue;
 }
 
+.movement{
+    cursor: pointer;
+    text-align: center;
+    position: fixed;
+    bottom: 3%;
+    right: 46%;
+    font-size: 120%;
+}
+
+.movement b:hover{
+    color: blue;
+}
+
 .navigation{
     background-color: black;
+    position: sticky;
 }
 
 .navigation ul{
@@ -288,6 +361,7 @@ button:hover{
     margin: 10% auto;
     background: white;
     width: 20dvw;
+    height: 30dvh;
     padding: 1% 2%;
 }
 
@@ -307,6 +381,16 @@ button:hover{
 }
 
 #change_password{
+    display: none;
+}
+
+#loading{
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    animation: fadeIn 1s;
+    background-color: rgba(0, 0, 0, 0.4);
     display: none;
 }
 

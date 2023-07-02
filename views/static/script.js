@@ -29,6 +29,7 @@
 // };
 
 let SORT_BY = "name";
+let QuerryStatus = 1;
 
 async function add_person(due_date_id, loan_amount_id){
     if (ensure_no_space() && ensure_number(loan_amount_id) && await ensure_date(due_date_id)){
@@ -67,6 +68,16 @@ function close_win(){
     $("#add_loan, #add_success, #unsuccessful").css("display", "none");
     $("#loan_amount, #loan_name, #due_date").val("");
     $("#loan_amount, #loan_name, #due_date").css({"border" : "black solid 1px", "outline" : "none"})
+}
+
+async function download(){
+    var userID = $("#names_opt").val();
+    $("#loading").css("display", "block")
+    await eel.download_data(userID);
+    setTimeout(async () => {
+        $("#loading").css("display", "none")
+        await show_download();
+    }, 3000)
 }
 
 async function ensure_date(id, due=""){
@@ -122,10 +133,6 @@ function ensure_number(input_id){
     }
 }
 
-function get_folder(event){
-    alert(event);
-}
-
 function loan(){
     var table = document.querySelector("table");
     if (!(table.style.filter) || table.style.filter === "blur(0px)"){
@@ -149,6 +156,16 @@ async function logg(){
 async function order_page(event){
     let inner = [];
     try{
+        if (event.srcElement.innerHTML === "Paid" || event.srcElement.innerHTML === "Unpaid"){
+            if (QuerryStatus == 1){
+                QuerryStatus = 0;
+                event.srcElement.innerHTML = "Unpaid";
+            }
+            else{
+                QuerryStatus = 1;
+                event.srcElement.innerHTML = "Paid";
+            }
+        }
         var order = event.srcElement.innerHTML;
     }
     catch{
@@ -156,18 +173,24 @@ async function order_page(event){
     }
     SORT_BY = order;
     var name_to_search = $("#name_search").val();
-    var datas = JSON.parse(await eel.fetch_data(order, name_to_search+"%")());
+    var datas = JSON.parse(await eel.fetch_data(order, QuerryStatus,name_to_search+"%")());
     for (let data of datas){
         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
         var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
+        if (data.balance <= 0){
+            button = '<b onclick="remove_show('+ data.id +')">REMOVE</b>'
+        }
+        else{
+            button = '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
+            '<b onclick="remove_show('+ data.id +')">REMOVE</b>'
+        }
         inner+= '<tr>' + 
                     '<td id="hasdhhj_v">' + name + '</td>' + 
                     '<td>' + data.loan + '</td>'+
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+
                     '<td class=actions>'+
-                        '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
-                        '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
+                        button
                     '</td>'+
                 '</tr>'
     }
@@ -256,6 +279,7 @@ async function remove(){
     var passWord = $("#pasd").val();
     if (await eel.login(passWord)()){
         $("#pasd").css({"border" : "black solid 1px", "outline" : "none"});
+        $("#pasd").val("")
         await eel.remover(id_rmf);
         await order_page(SORT_BY);
     }
@@ -273,7 +297,7 @@ function remove_show(id){
 
 async function search_p(){
     var name_to_search = $("#name_search").val();
-    var datas = JSON.parse(await eel.fetch_data(SORT_BY, name_to_search+"%")());
+    var datas = JSON.parse(await eel.fetch_data(SORT_BY, QuerryStatus, name_to_search+"%")());
     let inner = [];
     for (let data of datas){    
         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
@@ -312,6 +336,16 @@ function show_change_pass(){
         show.style.top = "-25%";
     }
     validate();
+}
+
+async function show_download(){
+    $("#download-div").css("display", "block");
+    var names = JSON.parse(await eel.fetch_username()());
+    var options = ['<option value="all">All</option>']
+    for (let name of names){
+        options += '<option value="'+ name.id +'">' + name.name +'</option>'
+    }
+    $("#names_opt").html(options);
 }
 
 async function validate(){
