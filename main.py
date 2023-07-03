@@ -10,7 +10,7 @@ from cs50 import SQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import json
-from helpers import downloader
+import helpers
 
 db = SQL("sqlite:///views/database/database.db")
 
@@ -143,13 +143,18 @@ def debtpay(uid, amount, datepaid) -> object:
         db.execute("UPDATE debt SET balance = ?, status = ? WHERE id = ?", new_balance, status, uid)
         return json.dumps({"status" : 200})
     except Exception as e:
-        print(e)
         return json.dumps({"status" : 405})
 
 @eel.expose
 def download_data(uid):
-    downloader(uid)
+    helpers.downloader(uid)
     return
+
+
+@eel.expose
+def initializer():
+    """Check if anyone have already passed their due date"""
+    helpers.check_due()
 
 eel.start("templates/login.html",
             disable_cache = True)

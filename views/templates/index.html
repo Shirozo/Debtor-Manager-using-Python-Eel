@@ -126,29 +126,35 @@
     </body>
     <script>
         document.addEventListener("DOMContentLoaded", async function(){
-            let inner = [];
-            var datas = JSON.parse(await eel.fetch_data(order = 'name', qstatus = 1)());
-            if (!(datas)){
-                $("#no_data").css("display", "block");
-            }
-            else{
-                $("#no_data").css("display", "none");
-                for (let data of datas){
-                    var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
-                    var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
-                    inner+= '<tr>' + 
-                                '<td id="hasdhhj_v">' + name + '</td>' + 
-                                '<td>' + data.loan + '</td>'+
-                                '<td>' + data.balance + '</td>'+
-                                '<td>' + due_date + '</td>'+
-                                '<td class=actions>'+
-                                    '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
-                                    '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
-                                '</td>'+
-                            '</tr>'
+            await eel.initializer();
+            $("#loading").css("display", "block");
+            setTimeout(async () => {
+                let inner = [];
+                var datas = JSON.parse(await eel.fetch_data(order = 'name', qstatus = 1)());
+                if (!(datas)){
+                    $("#no_data").css("display", "block");
                 }
-                document.querySelector("tbody").innerHTML = inner;
-            }
+                else{
+                    $("#no_data").css("display", "none");
+                    for (let data of datas){
+                        var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
+                        var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
+                        inner+= '<tr>' + 
+                                    '<td id="hasdhhj_v">' + name + '</td>' + 
+                                    '<td>' + data.loan + '</td>'+
+                                    '<td>' + data.balance + '</td>'+
+                                    '<td>' + due_date + '</td>'+
+                                    '<td class=actions>'+
+                                        '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
+                                        '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
+                                    '</td>'+
+                                '</tr>'
+                    }
+                    document.querySelector("tbody").innerHTML = inner;
+                }
+                $("#loading").css("display", "none");
+            }, 3000)
+
         });
     </script>
 </html>
