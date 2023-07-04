@@ -1,39 +1,39 @@
 //Deactivated as of now as it is in devlopment
-// document.onkeydown = (e) => {
-//     if (e.key == 123) {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.shiftKey && e.key == 'C'|| e.ctrlKey && e.shiftKey && e.key == 'c') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.shiftKey && e.key == 'J' || e.ctrlKey && e.shiftKey && e.key == 'j') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.shiftKey && e.key == 'N' || e.ctrlKey && e.shiftKey && e.key == 'n') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.shiftKey && e.key == 'T' || e.ctrlKey && e.shiftKey && e.key == 't') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.key == 'U' || e.ctrlKey && e.key == 'u') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.key == 'T' || e.ctrlKey && e.key == 't') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.key == 'N' || e.ctrlKey && e.key == 'n') {
-//         e.preventDefault();
-//     }
-//     if (e.ctrlKey && e.key == 'H' || e.ctrlKey && e.key == 'h') {
-//         e.preventDefault();  
-//     }
-//     if (e.ctrlKey && e.key == 'S' || e.ctrlKey && e.key == 's') {
-//         e.preventDefault();
-//     }
-// };
+document.onkeydown = (e) => {
+    if (e.key == 123) {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'C'|| e.ctrlKey && e.shiftKey && e.key == 'c') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'J' || e.ctrlKey && e.shiftKey && e.key == 'j') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'N' || e.ctrlKey && e.shiftKey && e.key == 'n') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'T' || e.ctrlKey && e.shiftKey && e.key == 't') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'U' || e.ctrlKey && e.key == 'u') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'T' || e.ctrlKey && e.key == 't') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'N' || e.ctrlKey && e.key == 'n') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'H' || e.ctrlKey && e.key == 'h') {
+        e.preventDefault();  
+    }
+    if (e.ctrlKey && e.key == 'S' || e.ctrlKey && e.key == 's') {
+        e.preventDefault();
+    }
+};
 
 let SORT_BY = "name";
 let QuerryStatus = 1;
