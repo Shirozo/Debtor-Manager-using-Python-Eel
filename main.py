@@ -122,7 +122,7 @@ def remover(idRM : int) -> None:
 
 
 @eel.expose
-def debtpay(uid, amount, datepaid) -> object:
+def debtpay(uid : int, amount : float, datepaid : str, transactType : str = "Payment") -> object:
     """
     This function update your balance in the database. It takes an 3 argument:
     `id`, `amount`, and `datepaid`\n
@@ -139,7 +139,7 @@ def debtpay(uid, amount, datepaid) -> object:
             status = False
         else:
             status = True
-        db.execute("INSERT INTO d_transaction(userID, paymentAMOUNT, datePAID) VALUES(?, ?, ?)", uid, amount, datepaid)
+        db.execute("INSERT INTO d_transaction(userID, paymentAMOUNT, datePAID, transacType) VALUES(?, ?, ?, ?)", uid, amount, datepaid, transactType)
         db.execute("UPDATE debt SET balance = ?, status = ? WHERE id = ?", new_balance, status, uid)
         return json.dumps({"status" : 200})
     except Exception as e:
@@ -149,6 +149,14 @@ def debtpay(uid, amount, datepaid) -> object:
 def download_data(uid):
     helpers.downloader(uid)
     return
+
+
+@eel.expose
+def history(uid : int) -> object:
+    """Return all the transaction history of the user"""
+
+    history = db.execute("SELECT * FROM d_transaction WHERE userID = ? ORDER BY datePAID", uid)
+    return json.dumps(history)
 
 
 @eel.expose

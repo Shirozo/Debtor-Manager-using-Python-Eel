@@ -123,6 +123,13 @@
         </div>
         <div class="add_style" id="payment_con">
         </div>
+        <div class="add_style" id="history">
+            <div class="user-history">
+                <span class="close" onclick="close_confirm('history')">✖</span>
+                <section></section>
+            </div>
+        </div>
+        
     </body>
     <script>
         document.addEventListener("DOMContentLoaded", async function(){
@@ -140,7 +147,7 @@
                         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
                         var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
                         inner+= '<tr>' + 
-                                    '<td id="hasdhhj_v">' + name + '</td>' + 
+                                    '<td id="hasdhhj_v" onclick="history('+data.id +')">' + name + '</td>' + 
                                     '<td>' + data.loan + '</td>'+
                                     '<td>' + data.balance + '</td>'+
                                     '<td>' + due_date + '</td>'+
@@ -153,7 +160,7 @@
                     document.querySelector("tbody").innerHTML = inner;
                 }
                 $("#loading").css("display", "none");
-            }, 3000)
+            }, 1500)
 
         });
     </script>

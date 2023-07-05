@@ -1,39 +1,39 @@
 //Deactivated as of now as it is in devlopment
-document.onkeydown = (e) => {
-    if (e.key == 123) {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'C'|| e.ctrlKey && e.shiftKey && e.key == 'c') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'J' || e.ctrlKey && e.shiftKey && e.key == 'j') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'N' || e.ctrlKey && e.shiftKey && e.key == 'n') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'T' || e.ctrlKey && e.shiftKey && e.key == 't') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'U' || e.ctrlKey && e.key == 'u') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'T' || e.ctrlKey && e.key == 't') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'N' || e.ctrlKey && e.key == 'n') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'H' || e.ctrlKey && e.key == 'h') {
-        e.preventDefault();  
-    }
-    if (e.ctrlKey && e.key == 'S' || e.ctrlKey && e.key == 's') {
-        e.preventDefault();
-    }
-};
+// document.onkeydown = (e) => {
+//     if (e.key == 123) {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'C'|| e.ctrlKey && e.shiftKey && e.key == 'c') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'J' || e.ctrlKey && e.shiftKey && e.key == 'j') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'N' || e.ctrlKey && e.shiftKey && e.key == 'n') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'T' || e.ctrlKey && e.shiftKey && e.key == 't') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'U' || e.ctrlKey && e.key == 'u') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'T' || e.ctrlKey && e.key == 't') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'N' || e.ctrlKey && e.key == 'n') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'H' || e.ctrlKey && e.key == 'h') {
+//         e.preventDefault();  
+//     }
+//     if (e.ctrlKey && e.key == 'S' || e.ctrlKey && e.key == 's') {
+//         e.preventDefault();
+//     }
+// };
 
 let SORT_BY = "name";
 let QuerryStatus = 1;
@@ -84,7 +84,7 @@ async function download(){
     setTimeout(async () => {
         $("#loading").css("display", "none")
         await show_download();
-    }, 3000)
+    }, 1500)
 }
 
 async function ensure_date(id, due=""){
@@ -140,6 +140,41 @@ function ensure_number(input_id){
     }
 }
 
+async function history(id){
+    $("#loading").css("display", "block")
+    var userData = JSON.parse(await eel.fetch_single_user(id)())[0];
+    var userHistory = JSON.parse(await eel.history(id)());
+    $("#loading").css("display", "none")
+    $("#history").css("display", "block")
+    inner = [
+        '<b>'+ userData.name +' History</b>' +
+        '<p>Due Date: '+userData.due_date+'</p>' +
+        '<p>Balance: '+userData.balance+'</p><br>'+
+        '<table><thead>'+
+            '<th>Amount</th><th>Type</th><th>Date</th>' +
+        '</thead>'
+
+    ]
+    if (userHistory.length === 0){
+        inner += '</table><img src="../icons/not_found.png" class="no-history">'
+    }
+    else{
+        inner += '<tbody>';
+        var total = 0;
+        for (let transaction of userHistory) {
+            inner += '<tr>'+
+                        '<td>'+ transaction.paymentAMOUNT +'</td>' +
+                        '<td>'+ transaction.transacType +'</td>' +
+                        '<td>'+ transaction.datePAID +'</td>' +
+                    '</tr>'
+            total += transaction.paymentAMOUNT
+        }
+        inner += '</tbody></table><hr><b style="margin-left: 13%">'+ total +'</br>'
+    }
+    document.querySelector("section").innerHTML = inner;
+
+}
+
 function loan(){
     var table = document.querySelector("table");
     if (!(table.style.filter) || table.style.filter === "blur(0px)"){
@@ -192,7 +227,7 @@ async function order_page(event){
             '<b onclick="remove_show('+ data.id +')">REMOVE</b>'
         }
         inner+= '<tr>' + 
-                    '<td id="hasdhhj_v">' + name + '</td>' + 
+                    '<td id="hasdhhj_v" onclick="history('+data.id+')">' + name + '</td>' + 
                     '<td>' + data.loan + '</td>'+
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+
@@ -273,7 +308,7 @@ async function paydebt(){
             else{
                 $("#pay_error").css("display", "inline-block");
             }
-        }, 3000);
+        }, 1500);
 
     }
     else{
@@ -310,7 +345,7 @@ async function search_p(){
         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
         var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
         inner+= '<tr>' + 
-                    '<td id="hasdhhj_v">' + name + '</td>' + 
+                    '<td id="hasdhhj_v" onclick = "history('+data.id+')">' + name + '</td>' + 
                     '<td>' + data.loan + '</td>'+
                     '<td>' + data.balance + '</td>'+
                     '<td>' + due_date + '</td>'+

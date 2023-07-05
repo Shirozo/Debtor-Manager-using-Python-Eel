@@ -59,4 +59,4 @@ def check_due():
             plusMonth = datetime(int(due_date[0]), int(due_date[1]), int(due_date[2])) + relativedelta(months=1)
             new_due_date = plusMonth.strftime("%Y-%m-%d")
             db.execute("UPDATE debt SET balance = ?, due_date = ? WHERE id = ?", new_balance, new_due_date, user["id"])
-            db.execute("INSERT INTO d_transaction(datePAID, paymentAMOUNT, userID) VALUES('DueDate', ?, ?)", tenPercent, user["id"])
+            db.execute("INSERT INTO d_transaction(datePAID, paymentAMOUNT, userID, transacType) VALUES(?, ?, ?, ?)", tenPercent, user["id"], user["due_date"])

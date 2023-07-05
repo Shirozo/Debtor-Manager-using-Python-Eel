@@ -365,6 +365,12 @@ button:hover{
     padding: 1% 2%;
 }
 
+.no-history{
+    width: 120px;
+    padding: 1% 1%;
+    margin: 10% 25%;
+}
+
 .payment_content #lastP{
     margin-bottom: 5%;
 }
@@ -382,6 +388,14 @@ button:hover{
 
 #change_password{
     display: none;
+}
+
+#hasdhhj_v {
+    cursor: pointer;
+}
+
+#hasdhhj_v:hover {
+    color: blue;
 }
 
 #loading{
@@ -425,4 +439,16 @@ button:hover{
 #success img{
     width: 60px;
     padding: 3.5% 5.4%;
+}
+
+.user-history{
+    margin: 10% auto;
+    width: 25dvw;
+    background: rgb(205, 205, 205);
+    padding: 1.5% 1.5%;
+}
+
+.user-history section table thead th, tr{
+    width: 20%;
+    text-align: center;
 }
