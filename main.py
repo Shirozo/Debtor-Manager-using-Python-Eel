@@ -133,7 +133,7 @@ def debtpay(uid : int, amount : float, datepaid : str, transactType : str = "Pay
     """
     try:
         balance = db.execute("SELECT balance FROM debt WHERE id = ?", uid)[0]["balance"]
-        amount = int(amount)
+        amount = float(amount)
         new_balance = balance - amount
         if new_balance <= 0:
             status = False
