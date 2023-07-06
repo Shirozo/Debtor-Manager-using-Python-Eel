@@ -53,7 +53,7 @@ def check_due():
     users = db.execute("SELECT * FROM debt WHERE status = 1")
     for user in users:
         due_date = (user["due_date"]).split("-")
-        if datetime(int(today[0]), int(today[1]), int(today[2])) == datetime(int(due_date[0]), int(due_date[1]), int(due_date[2])):
+        if datetime(int(today[0]), int(today[1]), int(today[2])) >= datetime(int(due_date[0]), int(due_date[1]), int(due_date[2])):
             tenPercent = user["balance"] * .10
             new_balance = user["balance"] + tenPercent
             plusMonth = datetime(int(due_date[0]), int(due_date[1]), int(due_date[2])) + relativedelta(months=1)

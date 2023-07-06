@@ -448,7 +448,7 @@ button:hover{
     padding: 1.5% 1.5%;
 }
 
-.user-history section table thead th, tr{
-    width: 20%;
+.user-history section table thead th, .user-history section table tbody tr td{
+    width: 15%;
     text-align: center;
 }

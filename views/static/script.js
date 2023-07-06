@@ -167,7 +167,9 @@ async function history(id){
                         '<td>'+ transaction.transacType +'</td>' +
                         '<td>'+ transaction.datePAID +'</td>' +
                     '</tr>'
-            total += transaction.paymentAMOUNT
+            if (transaction.transacType === "Payment"){
+                total += transaction.paymentAMOUNT;
+            }
         }
         inner += '</tbody></table><hr><b style="margin-left: 13%">'+ total +'</br>'
     }
