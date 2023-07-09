@@ -1,39 +1,39 @@
 //Deactivated as of now as it is in devlopment
-document.onkeydown = (e) => {
-    if (e.key == 123) {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'C'|| e.ctrlKey && e.shiftKey && e.key == 'c') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'J' || e.ctrlKey && e.shiftKey && e.key == 'j') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'N' || e.ctrlKey && e.shiftKey && e.key == 'n') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.shiftKey && e.key == 'T' || e.ctrlKey && e.shiftKey && e.key == 't') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'U' || e.ctrlKey && e.key == 'u') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'T' || e.ctrlKey && e.key == 't') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'N' || e.ctrlKey && e.key == 'n') {
-        e.preventDefault();
-    }
-    if (e.ctrlKey && e.key == 'H' || e.ctrlKey && e.key == 'h') {
-        e.preventDefault();  
-    }
-    if (e.ctrlKey && e.key == 'S' || e.ctrlKey && e.key == 's') {
-        e.preventDefault();
-    }
-};
+// document.onkeydown = (e) => {
+//     if (e.key == 123) {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'I' || e.ctrlKey && e.shiftKey && e.key == 'i') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'C'|| e.ctrlKey && e.shiftKey && e.key == 'c') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'J' || e.ctrlKey && e.shiftKey && e.key == 'j') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'N' || e.ctrlKey && e.shiftKey && e.key == 'n') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.shiftKey && e.key == 'T' || e.ctrlKey && e.shiftKey && e.key == 't') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'U' || e.ctrlKey && e.key == 'u') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'T' || e.ctrlKey && e.key == 't') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'N' || e.ctrlKey && e.key == 'n') {
+//         e.preventDefault();
+//     }
+//     if (e.ctrlKey && e.key == 'H' || e.ctrlKey && e.key == 'h') {
+//         e.preventDefault();  
+//     }
+//     if (e.ctrlKey && e.key == 'S' || e.ctrlKey && e.key == 's') {
+//         e.preventDefault();
+//     }
+// };
 
 let SORT_BY = "name";
 let QuerryStatus = 1;
@@ -147,12 +147,12 @@ async function history(id){
     $("#loading").css("display", "none")
     $("#history").css("display", "block")
     inner = [
-        '<b>'+ userData.name +' History</b>' +
-        '<p>Due Date: '+userData.due_date+'</p>' +
-        '<p>Balance: '+userData.balance+'</p><br>'+
-        '<table><thead>'+
-            '<th>Amount</th><th>Type</th><th>Date</th>' +
-        '</thead>'
+        `<b> ${userData.name} History</b>
+        <p>Due Date: ${userData.due_date} </p>
+        <p>Balance: ${userData.balance} </p><br>
+        <table><thead>
+            <th>Amount</th><th>Type</th><th>Date</th>
+        </thead>`
 
     ]
     if (userHistory.length === 0){
@@ -162,16 +162,16 @@ async function history(id){
         inner += '<tbody>';
         var total = 0;
         for (let transaction of userHistory) {
-            inner += '<tr>'+
-                        '<td>'+ transaction.paymentAMOUNT +'</td>' +
-                        '<td>'+ transaction.transacType +'</td>' +
-                        '<td>'+ transaction.datePAID +'</td>' +
-                    '</tr>'
+            inner += `<tr>
+                        <td> ${transaction.paymentAMOUNT} </td>
+                        <td> ${transaction.transacType} </td>
+                        <td> ${transaction.datePAID} </td>
+                    </tr>`
             if (transaction.transacType === "Payment"){
                 total += transaction.paymentAMOUNT;
             }
         }
-        inner += '</tbody></table><hr><b style="margin-left: 13%">'+ total +'</br>'
+        inner += `</tbody></table><hr><b style="margin-left: 13%"> ${total} </br>`
     }
     document.querySelector("section").innerHTML = inner;
 
@@ -222,21 +222,21 @@ async function order_page(event){
         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
         var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
         if (data.balance <= 0){
-            button = '<b onclick="remove_show('+ data.id +')">REMOVE</b>'
+            button = `<b onclick="remove_show(${data.id})">REMOVE</b>`
         }
         else{
-            button = '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
-            '<b onclick="remove_show('+ data.id +')">REMOVE</b>'
+            button = `<b onclick="payment_function(${data.id})">PAY</b> |
+                        <b onclick="remove_show(${data.id})">REMOVE</b>`
         }
-        inner+= '<tr>' + 
-                    '<td id="hasdhhj_v" onclick="history('+data.id+')">' + name + '</td>' + 
-                    '<td>' + data.loan + '</td>'+
-                    '<td>' + data.balance + '</td>'+
-                    '<td>' + due_date + '</td>'+
-                    '<td class=actions>'+
-                        button
-                    '</td>'+
-                '</tr>'
+        inner+= `<tr>
+                    <td id="hasdhhj_v" onclick="history(${data.id})"> ${name} </td> 
+                    <td> ${data.loan} </td>
+                    <td> ${data.balance} </td>
+                    <td> ${due_date} </td>
+                    <td class=actions>
+                        ${button}
+                    </td>
+                </tr>`
     }
     if (inner != ""){
         document.querySelector("tbody").innerHTML = inner;
@@ -262,29 +262,29 @@ async function payment_function(id){
     var user_data = JSON.parse(await eel.fetch_single_user(id)())[0];
     var safe_name = user_data.name.replace('<', '&lt;').replace('&', '&amp;');
     var safe_due_date = user_data.due_date.replace('<', '&lt;').replace('&', '&amp;');
-    let template = '<div class="payment_content">' +
-                        '<span onclick="close_payment()" class="close">✖</span>' +
-                        '<b>Payment For: ' + safe_name + '</b>' +
-                        '<p id="balansya">Balance: '+ user_data.balance +'</p>' +
-                        '<p id="lastP">Due Date: '+ safe_due_date +'</p>' +
-                        '<input type="hidden" id="due_val" value='+ safe_due_date+'>'+
-                        '<input type="hidden" id="user_id" value='+ user_data.id+'>' +
-                        '<form>' +
-                            '<div>' +
-                                '<p>Payment Amount</p>' +
-                                '<input type="number" id="paymentAmount" autofocus autocomplete="off" placeholder="Amount" onkeyup="ensure_number(\'paymentAmount\')">'+
-                            '</div>' +
-                            '<div>' +
-                                '<p>Date Paid</p>' +
-                                '<input type="date" id="tryMe" onchange="ensure_date(id=\'tryMe\',due=\'due_val\')">'+
-                            '</div>' +
-                            '<button id="paysubmit" type="button" onclick="paydebt()">' +
-                                '<p id="paymentBTN">Add Payment</p>'+
-                                '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>' +
-                            '</button>'+
-                            '<b id="pay_success" style="display: none">Paid!</b><b id="pay_error" style="display: none">Check Your Input!</b>'
-                        '</form>' +
-                    '</div>';
+    let template = `<div class="payment_content">
+                        <span onclick="close_payment()" class="close">✖</span>
+                        <b>Payment For: ${safe_name} </b>
+                        <p id="balansya">Balance: ${user_data.balance} </p>
+                        <p id="lastP">Due Date: ${safe_due_date} </p>
+                        <input type="hidden" id="due_val" value="${safe_due_date}">
+                        <input type="hidden" id="user_id" value="${user_data.id}">
+                        <form>
+                            <div>
+                                <p>Payment Amount</p>
+                                <input type="number" id="paymentAmount" autofocus autocomplete="off" placeholder="Amount" onkeyup="ensure_number('paymentAmount')">
+                            </div>
+                            <div>
+                                <p>Date Paid</p>
+                                <input type="date" id="tryMe" onchange="ensure_date(id='tryMe', due='due_val')">
+                            </div>
+                            <button id="paysubmit" type="button" onclick="paydebt()">
+                                <p id="paymentBTN">Add Payment</p>
+                                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                            </button>
+                            <b id="pay_success" style="display: none">Paid!</b><b id="pay_error" style="display: none">Check Your Input!</b>
+                        </form>
+                    </div>`
     conElement.innerHTML = template.trim();
     conElement.style.display = "block";
 }
@@ -346,16 +346,16 @@ async function search_p(){
     for (let data of datas){    
         var name = data.name.replace('<', '&lt;').replace('&', '&amp;');
         var due_date = data.due_date.replace('<', '&lt;').replace('&', '&amp;');
-        inner+= '<tr>' + 
-                    '<td id="hasdhhj_v" onclick = "history('+data.id+')">' + name + '</td>' + 
-                    '<td>' + data.loan + '</td>'+
-                    '<td>' + data.balance + '</td>'+
-                    '<td>' + due_date + '</td>'+
-                    '<td class=actions>'+
-                        '<b onclick=payment_function('+ data.id +')>PAY</b> | '+
-                        '<b onclick="remove_show('+ data.id +')">REMOVE</b>'+
-                    '</td>'+
-                '</tr>'
+        inner+= `<tr> 
+                    <td id="hasdhhj_v" onclick = "history(${data.id})"> ${name} </td> 
+                    <td> ${data.loan} </td>
+                    <td> ${data.balance} </td>
+                    <td> ${due_date} </td>
+                    <td class=actions>
+                        <b onclick="payment_function(${data.id})">PAY</b> |
+                        <b onclick="remove_show(${data.id})">REMOVE</b>
+                    </td>
+                </tr>`
     }
     if (inner != ""){
         document.querySelector("tbody").innerHTML = inner;
@@ -386,7 +386,7 @@ async function show_download(){
     var names = JSON.parse(await eel.fetch_username()());
     var options = ['<option value="all">All</option>']
     for (let name of names){
-        options += '<option value="'+ name.id +'">' + name.name +'</option>'
+        options += `<option value="${name.id}"> ${name.name} </option>`
     }
     $("#names_opt").html(options);
 }
