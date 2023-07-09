@@ -4,7 +4,40 @@ import csv
 from cs50 import SQL
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from werkzeug.security import generate_password_hash
 
+def db_creation():
+    """
+    Initializing database table
+    """
+    open("./views/database/database.db", "w")
+    db = SQL("sqlite:///views/database/database.db")
+    db.execute("""CREATE TABLE IF NOT EXISTS exdafgf ( 
+                hyansasd
+                )""")
+    db.execute("INSERT INTO exdafgf (hyansasd) VALUES (?)", generate_password_hash("admin"))
+    db.execute("""CREATE TABLE IF NOT EXISTS debt(
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                name TEXT NOT NULL, 
+                loan REAL NOT NULL, 
+                balance REAL,
+                due_date TEXT NOT NULL, 
+                status TEXT NOT NULL)
+            """)
+    db.execute(""" CREATE TABLE IF NOT EXISTS d_transaction (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                userID INTEGER NOT NULL, 
+                paymentAMOUNT REAL NOT NULL,
+                transacType TEXT NOT NULL, 
+                datePAID TEXT NOT NULL)
+                """)
+    db.execute("CREATE INDEX IF NOT EXISTS borrower ON debt (id)")
+    db.execute("CREATE INDEX IF NOT EXISTS transactions ON d_transaction (userID)")
+
+try:
+    db = SQL("sqlite:///views/database/database.db")
+except Exception:
+    db_creation()
 db = SQL("sqlite:///views/database/database.db")
 
 def downloader(params = "all"):
@@ -24,11 +57,11 @@ def downloader(params = "all"):
                 userFILE.write(f"Due Date: {data['due_date']}\n")
                 userFILE.write(f"Status: {data['status']}\n\n")
                 
-                writer = csv.DictWriter(userFILE, fieldnames=["Amount", "","Date"])
+                writer = csv.DictWriter(userFILE, fieldnames=["Amount", "*", "Type","","Date"])
                 writer.writeheader()
                 user_transaction = db.execute("SELECT * FROM d_transaction WHERE userID = ?", data["id"])
                 for transac in user_transaction:
-                    writer.writerow({"Amount" : f'{int(transac["paymentAMOUNT"])}', "Date" : transac["datePAID"].replace("-", "_"), "" : "\t"})
+                    writer.writerow({"Amount" : f'{int(transac["paymentAMOUNT"])}', "Date" : transac["datePAID"].replace("-", "_"), "" : "\t", "*" : "\t", "Type" : transac["transacType"]})
 
     else:
         single_user = db.execute("SELECT * FROM debt WHERE id = ?", params)[0]
@@ -39,11 +72,11 @@ def downloader(params = "all"):
             userFILE.write(f"Due Date: {single_user['due_date']}\n")
             userFILE.write(f"Status: {single_user['status']}\n\n")
 
-            writer = csv.DictWriter(userFILE, fieldnames=["Amount", "", "Date"])
+            writer = csv.DictWriter(userFILE, fieldnames=["Amount", "*", "Type","","Date"])
             writer.writeheader()
             user_transaction = db.execute("SELECT * FROM d_transaction WHERE userID = ?", single_user["id"])
             for transac in user_transaction:
-                writer.writerow({"Amount" : f'{int(transac["paymentAMOUNT"])}', "Date" : transac["datePAID"].replace("-", "_"), "" : "\t"})
+                writer.writerow({"Amount" : f'{int(transac["paymentAMOUNT"])}', "Date" : transac["datePAID"].replace("-", "_"), "" : "\t", "*" : "\t", "Type" : transac["transacType"]})
     
 
 
@@ -60,3 +93,4 @@ def check_due():
             new_due_date = plusMonth.strftime("%Y-%m-%d")
             db.execute("UPDATE debt SET balance = ?, due_date = ? WHERE id = ?", new_balance, new_due_date, user["id"])
             db.execute("INSERT INTO d_transaction(datePAID, paymentAMOUNT, userID, transacType) VALUES(?, ?, ?, ?)",user["due_date"], tenPercent, user["id"], "Due Date")
+        

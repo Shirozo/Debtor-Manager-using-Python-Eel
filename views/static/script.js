@@ -379,7 +379,6 @@ function show_change_pass(){
     else{
         show.style.top = "-25%";
     }
-    validate();
 }
 
 async function show_download(){
@@ -397,17 +396,15 @@ async function validate(){
     var confirmation = document.getElementById("confirmation");
     var changeBtn = document.getElementById("changeP");
     changeBtn.disabled = true;
-    if (NewPassword.value.trim() === "" || confirmation.value.trim() === ""){
-        changeBtn.disabled = true;
-    }
-    else{
-        if (NewPassword.value.trim() != confirmation.value.trim() || await eel.login(confirmation.value.trim())()){
+    if (NewPassword.value.trim() === "" || 
+        confirmation.value.trim() === "" || 
+        NewPassword.value.trim() != confirmation.value.trim() || 
+        JSON.parse(await eel.login(confirmation.value.trim())()).code == 200){
             $("#new_password, #confirmation").css({"border" : "red solid 1px", "outline":"red solid 1px"})
             changeBtn.disabled = true;
-        }
-        else{
-            $("#new_password, #confirmation").css({"border" : "green solid 1px", "outline":"green solid 1px"})
-            changeBtn.disabled = false;
-        }
+    }
+    else{
+        $("#new_password, #confirmation").css({"border" : "green solid 1px", "outline":"green solid 1px"})
+        changeBtn.disabled = false;
     }
 }

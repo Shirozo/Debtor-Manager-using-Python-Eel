@@ -11,8 +11,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import json
 import helpers
+from pyautogui import size
 
-db = SQL("sqlite:///views/database/database.db")
+try:
+    db = SQL("sqlite:///views/database/database.db")
+except Exception:
+    helpers.db_creation()
+    db = SQL("sqlite:///views/database/database.db")
 
 eel.init("views")
 
@@ -165,4 +170,5 @@ def initializer():
     helpers.check_due()
 
 eel.start("templates/login.html",
-            disable_cache = True)
+            disable_cache = True,
+            size=(size()))
